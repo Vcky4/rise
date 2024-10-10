@@ -1,4 +1,4 @@
-const common = {
+const colors = {
   primary: '#A10F7E',
   secondary: '#E6CEF2',
   white: '#FFFFFF',
@@ -18,21 +18,4 @@ const common = {
   warning: '#FFD9E9',
 };
 
-
-const light = {
-  background: '#FFFFFF',
-  textDark: '#221662',
-  inactive: 'rgba(34, 22, 98, 0.15)',
-  ...common,
-}
-
-const dark = {
-  background: '#221662',
-  textDark: '#FFFFFF',
-  inactive: 'rgba(51, 51, 51, 0.5)',
-  mapBackground: '#242f3e',
-  mapText: '#746855',
-  ...common,
-}
-
-export default { light, dark };
+export default colors;
