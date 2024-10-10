@@ -24,8 +24,21 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-// Create the context with initial value as `null`
-export const AuthContext = createContext<AuthContextProps | null>(null);
+// Default values for the AuthContext to avoid returning null
+const defaultAuthContext: AuthContextProps = {
+  login: () => {},
+  logout: () => {},
+  saveToken: () => {},
+  saveUser: () => {},
+  onboard: () => {},
+  isLoading: false,
+  token: null,
+  user: null,
+  isOnboarded: false,
+};
+
+// Create the context with initial default values
+export const AuthContext = createContext<AuthContextProps>(defaultAuthContext);
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

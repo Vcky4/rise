@@ -4,9 +4,8 @@ import authRouts from "../routs/authRouts";
 import Intro from "../../screens/onboarding/Intro";
 import SignUp from "../../screens/auth/SignUp";
 import Login from "../../screens/auth/Login";
-import OtpVerification from "../../screens/auth/OtpVerification";
+import OtpVerification from "../../screens/auth/SetPin";
 import ForgetPassword from "../../screens/auth/ForgetPassword";
-import ResetPassword from "../../screens/auth/ResetPassword";
 
 
 const Stack = createNativeStackNavigator();
@@ -18,9 +17,8 @@ const AuthStack = () => {
             <Stack.Screen name={authRouts.intro} component={Intro} options={{ headerShown: false }} />
             <Stack.Screen name={authRouts.signUp} component={SignUp} options={{ headerShown: false }} />
             <Stack.Screen name={authRouts.login} component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name={authRouts.otpVerification} component={OtpVerification} options={{ headerShown: false }} />
+            <Stack.Screen name={authRouts.setPin} component={OtpVerification} options={{ headerShown: false }} />
             <Stack.Screen name={authRouts.forgotPassword} component={ForgetPassword} options={{ headerShown: false }} />
-            <Stack.Screen name={authRouts.resetPassword} component={ResetPassword} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

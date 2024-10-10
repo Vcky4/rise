@@ -11,13 +11,7 @@ import Splash from "./src/screens/onboarding/Splash";
 
 
 const RootNavigator: React.FC = () => {
-  const authContext = useContext(AuthContext);
-  if (!authContext) {
-    return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Broken!</Text>
-    </View>
-  }
-  const { token, } = authContext
+  const { token, } = useContext(AuthContext)
   const [isLoading, setLoading] = useState(true);
   useEffect(() => { setTimeout(() => setLoading(false), 2000) });
 

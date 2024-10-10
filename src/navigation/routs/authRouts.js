@@ -3,10 +3,8 @@ const authRouts = {
     login: 'login',
     signUp: 'signUp',
     forgotPassword: 'forgotPassword',
-    otpVerification: 'otpVerification',
+    setPin: 'setPin',
     main: 'main',
-    resetPassword: 'ResetPassword',
-    verifyAccount: 'VerifyAccount',
     intro: 'Intro',
 }
 
