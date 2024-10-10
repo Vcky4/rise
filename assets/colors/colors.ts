@@ -3,9 +3,9 @@ const colors = {
   secondary: '#E6CEF2',
   white: '#FFFFFF',
   black: '#000000',
-  textDark: '#1E1F20',
+  textDark: '#292F33',
   textLight: '#424344',
-  textGray: '#868686',
+  textGray: '#71879C',
   aliceBlue: '#E9F1F7',
   success: '#AEFFB2',
   error: '#FFAEAE',
@@ -17,6 +17,7 @@ const colors = {
   inactiveTab: '#DEDEDE',
   textHash: '#455154',
   border: '#F8F8F9',
+  borderInactive: '#E1E8ED',
   warning: '#FFD9E9',
 };
 
