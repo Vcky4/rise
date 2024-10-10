@@ -1,5 +1,5 @@
 const colors = {
-  primary: '#A10F7E',
+  primary: '#0898A0',
   secondary: '#E6CEF2',
   white: '#FFFFFF',
   black: '#000000',
@@ -13,6 +13,7 @@ const colors = {
   lightBg2: 'rgba(37, 211, 102, 0.7)',
   halfWhite: 'rgba(255, 255, 255, 0.85)',
   inactiveBt: '#D7D7D7',
+  inactive:'rgba(113, 135, 156, 0.1)',
   inactiveTab: '#DEDEDE',
   textHash: '#455154',
   border: '#F8F8F9',

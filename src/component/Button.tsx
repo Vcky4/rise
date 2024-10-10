@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import colors from "../../assets/colors/colors";
+import { ThemedText } from './ThemedText';
 
 type Props = {
     title: string,
@@ -15,7 +16,7 @@ type Props = {
 };
 
 const Button: React.FC<Props> = ({
-    fontSize = 24,
+    fontSize = 16,
     title,
     onPress,
     buttonStyle,
@@ -42,14 +43,12 @@ const Button: React.FC<Props> = ({
                     flex: 1,
                     justifyContent: 'center'
                 }}>
-                    <Text style={{
+                    <ThemedText type='title' style={{
                         fontSize: fontSize,
                         textAlign: 'center',
-                        fontFamily: 'Inter-SemiBold',
                         color: textColor || colors.white,
-                        // flex: 1,
                         display: loading ? 'none' : 'flex'
-                    }}>{title}</Text>
+                    }}>{title}</ThemedText>
 
                     <ActivityIndicator size={'small'}
                         color={textColor || colors.white}

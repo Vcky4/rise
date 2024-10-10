@@ -10,7 +10,8 @@ import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import AuthStack from "./src/navigation/stacks/AuthStack";
 import MainStack from "./src/navigation/stacks/MainStack";
 import Splash from "./src/screens/onboarding/Splash";
-import { store } from "./src/utils/redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './src/utils/redux/redux-persist';
 
 
 const RootNavigator: React.FC = () => {
@@ -38,11 +39,13 @@ export default function App() {
       paddingTop: Platform.OS === 'ios' ? 50 : 0
     }}>
       <Provider store={store}>
-      <AuthContextProvider>
-        <StatusBar backgroundColor={"#0898A0"} />
-        <RootNavigator />
-      </AuthContextProvider>
-      <Toast />
+        <PersistGate loading={null} persistor={persistor}>
+          <AuthContextProvider>
+            <StatusBar backgroundColor={"#0898A0"} />
+            <RootNavigator />
+          </AuthContextProvider>
+          <Toast />
+        </PersistGate>
       </Provider>
     </View>
   );
