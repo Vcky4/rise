@@ -1,13 +1,16 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StatusBar, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import { Provider } from 'react-redux'
 
 
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import AuthStack from "./src/navigation/stacks/AuthStack";
 import MainStack from "./src/navigation/stacks/MainStack";
 import Splash from "./src/screens/onboarding/Splash";
+import { store } from "./src/utils/redux/store";
 
 
 const RootNavigator: React.FC = () => {
@@ -31,14 +34,16 @@ export default function App() {
   return (
     <View style={{
       flex: 1,
-      backgroundColor: "#A10F7E",
+      backgroundColor: "#0898A0",
       paddingTop: Platform.OS === 'ios' ? 50 : 0
     }}>
+      <Provider store={store}>
       <AuthContextProvider>
-        <StatusBar backgroundColor={"#A10F7E"} />
+        <StatusBar backgroundColor={"#0898A0"} />
         <RootNavigator />
       </AuthContextProvider>
       <Toast />
+      </Provider>
     </View>
   );
 }

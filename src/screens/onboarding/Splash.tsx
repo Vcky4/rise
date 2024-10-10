@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: '#A10F7E'
+        backgroundColor: '#0898A0'
     },
     image: {
         resizeMode: "contain",
