@@ -4,7 +4,6 @@ import colors from "../../assets/colors/colors";
 
 type Props = {
     containerStyle?: object,
-    theme?: 'dark' | 'light'
     onPress?: () => void,
 } & TextInputProps;
 
