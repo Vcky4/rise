@@ -14,6 +14,9 @@ interface AuthContextProps {
   saveToken: (token: string) => void;
   saveUser: (user: User) => void;
   onboard: () => void;
+  setPin: (pin: string) => void;
+  confirmPin: (pin: string) => boolean;
+  pin: string | null;
   isLoading: boolean;
   token: string | null;
   user: User | null;
@@ -26,11 +29,14 @@ interface AuthContextProviderProps {
 
 // Default values for the AuthContext to avoid returning null
 const defaultAuthContext: AuthContextProps = {
-  login: () => {},
-  logout: () => {},
-  saveToken: () => {},
-  saveUser: () => {},
-  onboard: () => {},
+  login: () => { },
+  logout: () => { },
+  saveToken: () => { },
+  saveUser: () => { },
+  onboard: () => { },
+  setPin: () => { },
+  confirmPin: () => false,
+  pin: null,
   isLoading: false,
   token: null,
   user: null,
@@ -45,6 +51,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [token, setToken, removeToken] = useStorage<string | null>('token', null);
   const [user, setUser, removeUser] = useStorage<User | null>('user', null);
   const [isOnboarded, setIsOnboarded, clearOnboarded] = useStorage<boolean>('onboarded', false);
+  const [pin, savePin, removePin] = useStorage<string | null>('pin', null);
 
   const login = (token: string, user: User) => {
     setIsLoading(true);
@@ -73,10 +80,25 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     setIsLoading(true);
     removeToken();
     removeUser();
+    removePin();
     setIsLoading(false);
   };
 
- 
+  const setPin = (pin: string) => {
+    //encrypt pin
+    savePin(pin);
+  };
+
+  const confirmPin = (confirmPin: string) => {
+    //decrypt pin
+    if (pin === confirmPin) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 2000);
@@ -94,6 +116,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         token,
         user,
         isOnboarded,
+        pin,
+        setPin,
+        confirmPin,
       }}
     >
       {children}

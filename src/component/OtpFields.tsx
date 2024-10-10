@@ -22,16 +22,17 @@ const OtpFields: React.FC<Props> = ({
     isSecured = false
 }) => {
     const otpFields = [];
-    const refsFocus = useRef<TextInput>(null);
+    // const refsFocus = useRef<TextInput>(null);
+    
 
     for (var t = 0; t < nuberOfFields; t++) {
         otpFields.push(
             <TouchableOpacity
-                onPress={() => { refsFocus.current && refsFocus.current.focus() }}
+                // onPress={() => { refsFocus.current && refsFocus.current.focus() }}
                 key={t} >
                 <View
                     style={[styles.otpField, {
-                        borderColor: colors.primary,
+                        borderColor: value.length > t ? colors.primary : colors.borderInactive,
                     }]}>
                     <Text style={[{
                         color: colors.primary,
@@ -50,7 +51,7 @@ const OtpFields: React.FC<Props> = ({
                 {otpFields}
 
             </View>
-            <TextInput ref={refsFocus}
+            {/* <TextInput ref={refsFocus}
                 // keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
                 value={value}
                 secureTextEntry={isSecured}
@@ -59,7 +60,7 @@ const OtpFields: React.FC<Props> = ({
                 onChangeText={text => {
                     // console.log(text);
                     onChangeText(text.length <= nuberOfFields ? text : value);
-                }} />
+                }} /> */}
         </>
     );
 }
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     },
     otpField: {
         width: 42,
-        height: 40,
-        borderRadius: 40,
+        height: 42,
+        borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 2,

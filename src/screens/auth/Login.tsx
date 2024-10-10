@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ThemedText } from "../../component/ThemedText";
@@ -7,6 +7,7 @@ import InputField from "../../component/InputField";
 import PasswordInput from "../../component/PasswordInput";
 import Button from "../../component/Button";
 import authRouts from "../../navigation/routs/authRouts";
+import { AuthContext } from "../../../context/AuthContext";
 
 
 
@@ -16,6 +17,7 @@ interface IProps {
 
 
 const Login: React.FC<IProps> = ({ navigation }) => {
+    const { login } = useContext(AuthContext);
     const [loginData, setLoginData] = React.useState({
         email: '',
         password: ''
@@ -53,7 +55,7 @@ const Login: React.FC<IProps> = ({ navigation }) => {
             <Button
                 enabled={canProceed}
                 title='Sign In'
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => login('gyhbnj', { email: loginData.email, id: loginData.password, name: 'name' })}
             />
 
             <ThemedText type='link' style={{
