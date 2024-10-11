@@ -28,7 +28,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? mainRouts.setPin;
   return (
     <View style={{
-      paddingTop: Platform.OS === 'ios' && routeName === mainRouts.home ? 50 : 0,
+      paddingTop: Platform.OS === 'ios' && routeName !== mainRouts.home ? 50 : 0,
       flex: 1,
       backgroundColor: colors.white
     }}>
