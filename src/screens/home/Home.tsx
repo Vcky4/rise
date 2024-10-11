@@ -20,6 +20,7 @@ interface IProps {
 }
 
 const Home: React.FC<IProps> = ({navigation}) => {
+  const [isVisible, setisVible] = React.useState(false);
   return (
     <View style={styles.container}>
       <Image
@@ -128,8 +129,12 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   {' '}
                   Total Balance
                 </ThemedText>
+                <TouchableOpacity onPress={()=>{
+                  setisVible(!isVisible)
+                }}>
 
-                <Icon source={require('../../../assets/images/eye.png')} />
+                <Icon source={ isVisible ?require('../../../assets/images/eye.png'):require('../../../assets/images/eye_opened.png')} />
+                </TouchableOpacity>
               </View>
               <ThemedText
                 style={{
@@ -139,7 +144,8 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   fontFamily: 'DMSans-regular',
                   marginTop: 12,
                 }}>
-                $0.00
+                  {!isVisible?' $0.00':"*******"}
+               
               </ThemedText>
 
               <View
@@ -189,6 +195,9 @@ const Home: React.FC<IProps> = ({navigation}) => {
           </View>
 
           <TouchableOpacity
+          onPress={()=>{
+            
+          }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
