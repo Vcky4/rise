@@ -12,7 +12,11 @@ import MainStack from "./src/navigation/stacks/MainStack";
 import Splash from "./src/screens/onboarding/Splash";
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './src/utils/redux/redux-persist';
+import { onlineManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import NetInfo from '@react-native-community/netinfo'
 
+// Create a client
+const queryClient = new QueryClient()
 
 const RootNavigator: React.FC = () => {
   const { token, } = useContext(AuthContext)
@@ -29,6 +33,11 @@ const RootNavigator: React.FC = () => {
   )
 }
 export default function App() {
+  onlineManager.setEventListener((setOnline) => {
+    return NetInfo.addEventListener((state) => {
+      setOnline(!!state.isConnected)
+    })
+  })
   if (Platform.OS == 'ios') {
     StatusBar.setBarStyle('light-content', true);	//<<--- add this
   }
@@ -38,15 +47,17 @@ export default function App() {
       backgroundColor: "#0898A0",
       paddingTop: Platform.OS === 'ios' ? 50 : 0
     }}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <AuthContextProvider>
-            <StatusBar backgroundColor={"#0898A0"} />
-            <RootNavigator />
-          </AuthContextProvider>
-          <Toast />
-        </PersistGate>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <AuthContextProvider>
+              <StatusBar backgroundColor={"#0898A0"} />
+              <RootNavigator />
+            </AuthContextProvider>
+            <Toast />
+          </PersistGate>
+        </Provider>
+      </QueryClientProvider>
     </View>
   );
 }
