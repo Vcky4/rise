@@ -6,6 +6,7 @@ import colors from "../../../assets/colors/colors";
 import { ThemedText } from "../../component/ThemedText";
 import Button from "../../component/Button";
 import InputField from "../../component/InputField";
+import DatePicker from "react-native-date-picker";
 
 
 
@@ -33,23 +34,49 @@ const tips = [
 
 const CreatePlans: React.FC<IProps> = ({ navigation }) => {
     const [step, setStep] = React.useState(0);
-
+    const [planData, setPlanData] = React.useState({
+        "plan_name": '',
+        "target_amount": '',
+        "maturity_date": ''
+    })
+    const [date, setDate] = React.useState(new Date())
+    const [open, setOpen] = React.useState(false)
     BackHandler.addEventListener('hardwareBackPress', () => {
         step === 0 ? navigation.goBack() : setStep(step - 1);
         return true
     })
 
     const titles = [
-        'Create a plan',
-        'Goal name',
-        'Target amount',
-        'Target date'
+        {
+            tl: 'Create a plan',
+            qs: ''
+        },
+        {
+            tl: 'Goal name',
+            qs: 'What are you saving for?'
+        },
+        {
+            tl: 'Target amount',
+            qs: 'How much do need?'
+        },
+        {
+            tl: 'Set a target',
+            qs: 'When do you want to withdraw?'
+        }, {
+            tl: 'Review',
+        }
     ]
+
+    const canProceed = step === 0
+        ? true
+        : step === 1 ? planData.plan_name.length > 0
+            : step === 2 ? planData.target_amount.length > 0
+                : planData.maturity_date.length > 0
 
     return (
         <View style={styles.container}>
             <View style={{
-                // marginBottom: '5%',
+                marginBottom: '4%',
                 flexDirection: 'row',
                 width: '100%',
                 alignItems: 'center',
@@ -86,32 +113,36 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                     style={{
                         fontSize: 24,
                     }}>
-                    {titles[step]}
+                    {titles[step].tl}
                 </ThemedText>
             </View>
 
-            <ThemedText style={{
-                color: colors.textGray,
-                alignSelf: step === 0 ? 'center' : 'flex-start',
-            }}>
-                {step === 0 ? 'Reach your goals faster' : `Question ${step + 1} of 3`}
-            </ThemedText>
+            {step <= 3 &&
+                <>
+                    <ThemedText style={{
+                        color: colors.textGray,
+                        alignSelf: step === 0 ? 'center' : 'flex-start',
+                    }}>
+                        {step === 0 ? 'Reach your goals faster' : `Question ${step} of 3`}
+                    </ThemedText>
 
-            <View style={{
-                width: '100%',
-                height: 10,
-                backgroundColor: colors.borderInactive,
-                borderRadius: 5,
-                display: step === 0 ? 'none' : 'flex',
-                marginBottom: '10%'
-            }}>
-                <View style={{
-                    backgroundColor: colors.primary,
-                    width: `${(step) * 33.33}%`,
-                    height: '100%',
-                    borderRadius: 5
-                }} />
-            </View>
+                    <View style={{
+                        width: '100%',
+                        height: 10,
+                        backgroundColor: colors.borderInactive,
+                        borderRadius: 5,
+                        display: step === 0 ? 'none' : 'flex',
+                        marginBottom: '10%'
+                    }}>
+                        <View style={{
+                            backgroundColor: colors.primary,
+                            width: `${(step) * 33.33}%`,
+                            height: '100%',
+                            borderRadius: 5
+                        }} />
+                    </View>
+                </>
+            }
 
             {step === 0 &&
                 <>
@@ -151,30 +182,146 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                 </>
             }
 
+            {step <= 3 &&
+                <ThemedText type='title' style={{
+                    fontSize: 16,
+                    display: step === 0 ? 'none' : 'flex',
+                }}>{titles[step].qs}</ThemedText>
+            }
+
             {step === 1 &&
                 <>
-                    <ThemedText type='subtitle' style={{
-                        fontSize: 16,
-                    }}>Whate are you saving for?</ThemedText>
-
                     <InputField
-                        // placeholder="Enter goal name"
-                        
+                        value={planData.plan_name}
+                        onChangeText={(text) => setPlanData({ ...planData, plan_name: text })}
                     />
                 </>
             }
 
+            {step === 2 &&
+                <>
+                    <InputField
+                        value={planData.target_amount}
+                        onChangeText={(text) => setPlanData({ ...planData, target_amount: text })}
+                        isAmount
+                        keyboardType="number-pad"
+                    />
+                </>
+            }
+
+            {step === 3 &&
+                <>
+                    <View style={[{
+                        borderColor: colors.borderInactive,
+                        borderRadius: 5,
+                        borderWidth: 1,
+                        paddingHorizontal: 10,
+                        height: 50,
+                        justifyContent: 'center',
+                    }]}>
+                        <TouchableOpacity onPress={() => setOpen(true)}
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                width: "100%",
+                            }}>
+                            <ThemedText style={{
+                                fontSize: 16,
+                                fontFamily: 'DMSans-SemiBold',
+                                color: colors.textDark,
+                            }}>{planData.maturity_date || 'Choose date'}</ThemedText>
+                            <Icon
+                                source={require('../../../assets/images/calender.png')}
+                                size={20}
+                            />
+
+                        </TouchableOpacity>
+                        <DatePicker
+                            modal
+                            mode="date"
+                            open={open}
+                            date={date}
+                            onConfirm={(date) => {
+                                setOpen(false)
+                                setDate(date)
+                                setPlanData({ ...planData, maturity_date: date.toISOString().split('T')[0] });
+                            }}
+                            onCancel={() => {
+                                setOpen(false)
+                            }}
+                        />
+                    </View>
+                </>
+            }
+
+            {step === 4 &&
+                <View>
+                    <ThemedText style={{
+                        color: colors.textGray,
+                        alignSelf: 'center',
+                        fontSize: 12,
+                    }}>Kate Ventures
+                    </ThemedText>
+                    <ThemedText type='title' style={{
+                        alignSelf: 'center',
+                    }}>$10,930.75
+                    </ThemedText>
+                    <ThemedText style={{
+                        alignSelf: 'center',
+                        fontSize: 15,
+                    }}>by 20 June 2021
+                    </ThemedText>
+
+                    <View style={{
+                        flexDirection: 'row',
+                        width: '100%',
+                        gap: 24,
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 10
+                        }}>
+                            <Icon source={require('../../../assets/images/dot.png')}
+                                size={15}
+                                color={colors.borderInactive}
+                            />
+                            <ThemedText style={{
+                                alignSelf: 'center',
+                                fontSize: 15,
+                            }}>Investments • $50,400
+                            </ThemedText>
+                        </View>
+                    </View>
+                </View>
+            }
+
             <View style={{
                 flex: 1,
-                justifyContent: 'flex-end',
-                marginBottom: '15%'
+                justifyContent: step === 0 ? 'flex-end' : undefined,
+                marginBottom: '15%',
+                gap: 10
             }}>
                 <Button
-                    title="Continue"
+                    title={step <= 3 ? "Continue" : 'Agree & Continue'}
                     onPress={() => {
-                        setStep(step + 1)
+                        if (step <= 3) {
+                            setStep(step + 1)
+                        } else {
+
+                        }
                     }}
-                    enabled={true}
+                    enabled={canProceed}
+                />
+                <Button
+                    title={'Start Over'}
+                    onPress={() => {
+                        setStep(1)
+                    }}
+                    buttonColor={colors.inactive}
+                    textColor={colors.primary}
+                    enabled={canProceed}
                 />
             </View>
 
