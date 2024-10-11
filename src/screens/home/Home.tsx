@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import colors from '../../../assets/colors/colors';
@@ -26,7 +27,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
         source={require('../../../assets/images/overlay.png')}
       />
 
-      <View style={styles.header}>
+      <View style={[styles.header,{ paddingTop: Platform.OS === 'ios' ? 60 : 0}]}>
         <ThemedText
           style={{
             color: colors.text,
@@ -466,6 +467,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     paddingTop: 16,
+
   },
   overlay: {
     position: 'absolute',

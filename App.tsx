@@ -46,7 +46,7 @@ export default function App() {
     <View style={{
       flex: 1,
       backgroundColor: "transperent",
-      // paddingTop: Platform.OS === 'ios' ? 50 : 0
+      
     }}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
