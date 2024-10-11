@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     paddingTop: 16,
-
+    paddingBottom: 10,
   },
   overlay: {
     position: 'absolute',
