@@ -5,6 +5,7 @@ import Intro from "../../screens/onboarding/Intro";
 import SignUp from "../../screens/auth/SignUp";
 import Login from "../../screens/auth/Login";
 import ForgetPassword from "../../screens/auth/ForgetPassword";
+import Success from "../../screens/home/Success";
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,11 @@ const AuthStack = () => {
             <Stack.Screen name={authRouts.signUp} component={SignUp} options={{ headerShown: false }} />
             <Stack.Screen name={authRouts.login} component={Login} options={{ headerShown: false }} />
             <Stack.Screen name={authRouts.forgotPassword} component={ForgetPassword} options={{ headerShown: false }} />
+            <Stack.Screen
+                name={authRouts.success}
+                component={Success}
+                options={{ headerShown: false }}
+            />
         </Stack.Navigator>
     );
 }

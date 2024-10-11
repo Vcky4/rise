@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Platform, TouchableOpacity, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ThemedText } from "../../component/ThemedText";
 import colors from "../../../assets/colors/colors";
@@ -8,6 +8,10 @@ import PasswordInput from "../../component/PasswordInput";
 import Button from "../../component/Button";
 import authRouts from "../../navigation/routs/authRouts";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import PhoneInput from "../../component/PhoneInput";
+import Icon from "../../component/Icon";
+import DatePicker from "react-native-date-picker";
+import mainRouts from "../../navigation/routs/mainRouts";
 
 
 
@@ -17,12 +21,19 @@ interface IProps {
 
 
 const SignUp: React.FC<IProps> = ({ navigation }) => {
-    const [signUpData, setSignUpData] = React.useState({
-        email: '',
-        password: ''
+    const [signUpData, setSignUpData] = useState({
+        email_address: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        date_of_birth: '',
+        username: ''
     });
-    const [step, setStep] = React.useState(0);
-
+    const [countryCode, setCountryCode] = useState('');
+    const [open, setOpen] = useState(false)
+    const [step, setStep] = useState(0);
+    const [date, setDate] = useState(new Date())
     //email regex
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     //regex for least one uppercase letter
@@ -32,12 +43,15 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
     //regex for minimum of 8 characters
     const lengthRegex = /^.{8,}$/;
 
+
     const canProceed = step === 0 ?
-        emailRegex.test(signUpData.email) &&
+        emailRegex.test(signUpData.email_address) &&
         uppercaseRegex.test(signUpData.password) &&
         uniqueRegex.test(signUpData.password) &&
         lengthRegex.test(signUpData.password)
-        : true
+        : signUpData.first_name.length > 0 &&
+        signUpData.last_name.length > 0 &&
+        signUpData.date_of_birth.length > 4
 
     return (
         <View style={styles.container}>
@@ -47,7 +61,7 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
             <ThemedText style={{
                 color: colors.textGray,
                 width: '95%',
-                marginBottom: '15%'
+                marginBottom: '10%'
             }}>
                 {step === 0
                     ? 'Start building your dollar-denominated investment portfolio'
@@ -58,8 +72,8 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
             {step === 0 &&
                 <>
                     <InputField
-                        value={signUpData.email}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, email: text })}
+                        value={signUpData.email_address}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, email_address: text })}
                         label='Email address'
                         keyboardType='email-address'
                     />
@@ -112,15 +126,112 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
                 </>
             }
 
+            {step === 1 &&
+                <>
+                    <InputField
+                        value={signUpData.first_name}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, first_name: text })}
+                        label='Legal First Name'
+                    />
+                    <InputField
+                        value={signUpData.last_name}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, last_name: text })}
+                        label='Legal Last Name'
+                    />
+                    <InputField
+                        value={signUpData.username}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, username: text })}
+                        label='Nick name'
+                    />
+                    <PhoneInput
+                        value={signUpData.phone_number}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, phone_number: text })}
+                        onSelection={(item) => setCountryCode(item)}
+                    />
+                    <View style={[{
+                        borderColor: colors.borderInactive,
+                        borderRadius: 5,
+                        borderWidth: 1,
+                        paddingHorizontal: 10,
+                        height: 50,
+                        justifyContent: 'center',
+                    }]}>
+                        <ThemedText style={{
+                            position: 'absolute',
+                            fontSize: 14,
+                            display: signUpData.date_of_birth?.length ?? 0 > 0 ? 'flex' : 'none',
+                            color: colors.primary,
+                            left: 10,
+                            backgroundColor: colors.white,
+                            paddingHorizontal: 5,
+                            transform: [{
+                                translateY: Platform.OS === 'ios' ? -40 : -25,
+                            }]
+                        }}>Date of Birth</ThemedText>
+                        <TouchableOpacity onPress={() => setOpen(true)}
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "100%",
+                        }}>
+                            <ThemedText style={{
+                                fontSize: 16,
+                                fontFamily: 'DMSans-SemiBold',
+                                color: colors.textDark,
+                            }}>{signUpData.date_of_birth || 'Choose date'}</ThemedText>
+                            <Icon
+                                source={require('../../../assets/images/calender.png')}
+                                size={20}
+                            />
+
+                        </TouchableOpacity>
+                        <DatePicker
+                            modal
+                            mode="date"
+                            open={open}
+                            date={date}
+                            onConfirm={(date) => {
+                                setOpen(false)
+                                setDate(date)
+                                setSignUpData({ ...signUpData, date_of_birth: date.toISOString().split('T')[0] });
+                            }}
+                            onCancel={() => {
+                                setOpen(false)
+                            }}
+                        />
+                    </View>
+                </>
+            }
             <Button
                 enabled={canProceed}
                 title='Sign In'
                 onPress={() => {
                     if (step === 0) {
                         setStep(1);
+                    }else{
+                        navigation.navigate(mainRouts.success,{
+                            title: 'You just created your Rise account',
+                            desc: 'Welcome to Rise, let’s take you home',
+                        });
                     }
                 }}
             />
+
+            {step === 1 && <ThemedText style={{
+                color: colors.textGray,
+                width: '95%',
+                marginTop: '10%',
+                alignSelf: 'center',
+                textAlign: 'center'
+            }}>
+                By clicking Continue, you agree to our <ThemedText style={{
+                    color: colors.primary
+                }}>Terms of Service</ThemedText> and <ThemedText style={{
+                    color: colors.primary
+                }}>Privacy Policy</ThemedText>
+            </ThemedText>
+            }
 
 
         </View>

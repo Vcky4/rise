@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import colors from "../../../assets/colors/colors";
@@ -6,6 +6,8 @@ import Button from "../../component/Button";
 import mainRouts from "../../navigation/routs/mainRouts";
 import { ThemedText } from "../../component/ThemedText";
 import { RouteProp } from "@react-navigation/native";
+import { AuthContext } from "../../../context/AuthContext";
+import authRouts from "../../navigation/routs/authRouts";
 
 
 
@@ -16,6 +18,7 @@ interface IProps {
 
 
 const Success: React.FC<IProps> = ({ navigation, route }) => {
+    const { token } = useContext(AuthContext);
     const props = route.params;
     return (
         <View style={styles.container}>
@@ -31,11 +34,12 @@ const Success: React.FC<IProps> = ({ navigation, route }) => {
                     resizeMode="contain"
                 />
                 <ThemedText type='subtitle' style={{
-
+                    width: '70%',
+                    textAlign: 'center',
                 }}>{props?.title}</ThemedText>
                 <ThemedText style={{
                     color: colors.textGray,
-                    width: '80%',
+                    width: '70%',
                     marginBottom: '15%',
                     textAlign: 'center'
                 }}>{props?.desc}
@@ -44,7 +48,9 @@ const Success: React.FC<IProps> = ({ navigation, route }) => {
             <Button
                 enabled={true}
                 title="Okay"
-                onPress={() => navigation.navigate(mainRouts.home)}
+                onPress={() => navigation.navigate(
+                    token ? mainRouts.home : authRouts.login
+                )}
             />
         </View>
 
