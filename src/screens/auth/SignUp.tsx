@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Platform, TouchableOpacity, } from "react-native";
+import { View, StyleSheet, Platform, TouchableOpacity, BackHandler, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ThemedText } from "../../component/ThemedText";
 import colors from "../../../assets/colors/colors";
@@ -12,6 +12,9 @@ import PhoneInput from "../../component/PhoneInput";
 import Icon from "../../component/Icon";
 import DatePicker from "react-native-date-picker";
 import mainRouts from "../../navigation/routs/mainRouts";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../hooks/useAuth";
+import Toast from "react-native-toast-message";
 
 
 
@@ -21,12 +24,13 @@ interface IProps {
 
 
 const SignUp: React.FC<IProps> = ({ navigation }) => {
+    const auth = useAuth()
     const [signUpData, setSignUpData] = useState({
-        email_address: '',
+        email: '',
         password: '',
-        first_name: '',
-        last_name: '',
-        phone_number: '',
+        firstName: '',
+        lastName: '',
+        phone: '',
         date_of_birth: '',
         username: ''
     });
@@ -41,18 +45,65 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
     //regex for least one unique character
     const uniqueRegex = /(?=.*[!@#$%^&*?])/;
     //regex for minimum of 8 characters
-    const lengthRegex = /^.{8,}$/;
+    const lengthRegex = /^.{10,}$/;
 
 
     const canProceed = step === 0 ?
-        emailRegex.test(signUpData.email_address) &&
+        emailRegex.test(signUpData.email) &&
         uppercaseRegex.test(signUpData.password) &&
         uniqueRegex.test(signUpData.password) &&
         lengthRegex.test(signUpData.password)
-        : signUpData.first_name.length > 0 &&
-        signUpData.last_name.length > 0 &&
-        signUpData.date_of_birth.length > 4
+        : signUpData.firstName.length > 0 &&
+        signUpData.lastName.length > 0 &&
+        signUpData.date_of_birth.length > 4 &&
+        signUpData.phone.length > 4
 
+    const mutation = useMutation({
+        mutationFn: async () => {
+            return await fetch('https://manator-staging-qogza.ondigitalocean.app/api/v1/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...signUpData,
+                    phone: `${countryCode}${signUpData.phone}`
+                })
+            }).then(res => res.json())
+        },
+        onSuccess: (data) => {
+            console.log(data)
+            if (data.token) {
+                navigation.navigate(mainRouts.success, {
+                    title: 'You just created your Rise account',
+                    desc: 'Welcome to Rise, let’s take you home',
+                });
+                // login(data.data.token, data.data as IUser)
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: data?.errors?.message
+                })
+            }
+        },
+        onError: (err) => {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: err?.message
+            })
+        }
+    })
+
+    BackHandler.addEventListener('hardwareBackPress', () => {
+        if (step === 1) {
+            setStep(0);
+            return true
+        }
+        navigation.goBack()
+        return false
+    })
     return (
         <View style={styles.container}>
             <ThemedText type='subtitle'>{
@@ -72,10 +123,11 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
             {step === 0 &&
                 <>
                     <InputField
-                        value={signUpData.email_address}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, email_address: text })}
+                        value={signUpData.email}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, email: text })}
                         label='Email address'
                         keyboardType='email-address'
+                        autoCapitalize="none"
                     />
                     <PasswordInput
                         value={signUpData.password}
@@ -84,7 +136,7 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
                     />
                     {
                         [
-                            'Minimum of 8 characters',
+                            'Minimum of 10 characters',
                             'One UPPERCASE character',
                             'One unique character (e.g: !@#$%^&*?)'
                         ].map((item, index) => <View key={index} style={{
@@ -129,23 +181,23 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
             {step === 1 &&
                 <>
                     <InputField
-                        value={signUpData.first_name}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, first_name: text })}
+                        value={signUpData.firstName}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, firstName: text.trim() })}
                         label='Legal First Name'
                     />
                     <InputField
-                        value={signUpData.last_name}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, last_name: text })}
+                        value={signUpData.lastName}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, lastName: text.trim() })}
                         label='Legal Last Name'
                     />
                     <InputField
                         value={signUpData.username}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, username: text })}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, username: text.trim() })}
                         label='Nick name'
                     />
                     <PhoneInput
-                        value={signUpData.phone_number}
-                        onChangeText={(text) => setSignUpData({ ...signUpData, phone_number: text })}
+                        value={signUpData.phone}
+                        onChangeText={(text) => setSignUpData({ ...signUpData, phone: text.trim() })}
                         onSelection={(item) => setCountryCode(item)}
                     />
                     <View style={[{
@@ -169,12 +221,12 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
                             }]
                         }}>Date of Birth</ThemedText>
                         <TouchableOpacity onPress={() => setOpen(true)}
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                        }}>
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                width: "100%",
+                            }}>
                             <ThemedText style={{
                                 fontSize: 16,
                                 fontFamily: 'DMSans-SemiBold',
@@ -206,14 +258,12 @@ const SignUp: React.FC<IProps> = ({ navigation }) => {
             <Button
                 enabled={canProceed}
                 title='Sign In'
+                loading={mutation.isPending}
                 onPress={() => {
                     if (step === 0) {
                         setStep(1);
-                    }else{
-                        navigation.navigate(mainRouts.success,{
-                            title: 'You just created your Rise account',
-                            desc: 'Welcome to Rise, let’s take you home',
-                        });
+                    } else {
+                        mutation.mutate()
                     }
                 }}
             />
