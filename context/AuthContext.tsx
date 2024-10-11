@@ -1,25 +1,20 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import useStorage from "../src/hooks/useStorage";
+import IUser from "../src/network/models/IUser";
 
-// Define the types for the context and the props
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
 
 interface AuthContextProps {
-  login: (token: string, user: User) => void;
+  login: (token: string, user: IUser) => void;
   logout: () => void;
   saveToken: (token: string) => void;
-  saveUser: (user: User) => void;
+  saveUser: (user: IUser) => void;
   onboard: () => void;
   setPin: (pin: string) => void;
   confirmPin: (pin: string) => boolean;
   pin: string | null;
   isLoading: boolean;
   token: string | null;
-  user: User | null;
+  user: IUser | null;
   isOnboarded: boolean;
 }
 
@@ -49,11 +44,11 @@ export const AuthContext = createContext<AuthContextProps>(defaultAuthContext);
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [token, setToken, removeToken] = useStorage<string | null>('token', null);
-  const [user, setUser, removeUser] = useStorage<User | null>('user', null);
+  const [user, setUser, removeUser] = useStorage<IUser | null>('user', null);
   const [isOnboarded, setIsOnboarded, clearOnboarded] = useStorage<boolean>('onboarded', false);
   const [pin, savePin, removePin] = useStorage<string | null>('pin', null);
 
-  const login = (token: string, user: User) => {
+  const login = (token: string, user: IUser) => {
     setIsLoading(true);
     setToken(token);
     setUser(user);
@@ -66,7 +61,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     setIsLoading(false);
   };
 
-  const saveUser = (user: User) => {
+  const saveUser = (user: IUser) => {
     setIsLoading(true);
     setUser(user);
     setIsLoading(false);

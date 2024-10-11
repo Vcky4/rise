@@ -1,5 +1,5 @@
 const endpoints = {
-  baseUrl: 'https://manator-staging-qogza.ondigitalocean.app/api/v1',
+  baseUrl: 'https://rise-rn-test-api-gb2v6.ondigitalocean.app/api/v1/',
   session: '/sessions',
   register: '/users',
   checkEmail: '/auth/check-email/',

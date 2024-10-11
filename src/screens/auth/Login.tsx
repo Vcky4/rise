@@ -8,6 +8,10 @@ import PasswordInput from "../../component/PasswordInput";
 import Button from "../../component/Button";
 import authRouts from "../../navigation/routs/authRouts";
 import { AuthContext } from "../../../context/AuthContext";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "../../hooks/useAuth";
+import Toast from "react-native-toast-message";
+import IUser from "../../network/models/IUser";
 
 
 
@@ -19,14 +23,40 @@ interface IProps {
 const Login: React.FC<IProps> = ({ navigation }) => {
     const { login } = useContext(AuthContext);
     const [loginData, setLoginData] = React.useState({
-        email: '',
+        email_address: '',
         password: ''
     });
+    const auth = useAuth()
 
     //email regex
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    const canProceed = emailRegex.test(loginData.email) && loginData.password.length > 0;
+    const canProceed = emailRegex.test(loginData.email_address) && loginData.password.length > 0;
+
+    const mutation = useMutation({
+        mutationFn: async () => {
+            return await auth.login(loginData)
+        },
+        onSuccess: (data) => {
+            if (data?.res.ok && data.data) {
+                login(data.data.token, data.data as IUser)
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: data?.err?.message
+                })
+            }
+        },
+        onError: (err) => {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: err?.message
+            })
+        }
+
+    })
     return (
         <View style={styles.container}>
             <ThemedText type='subtitle' style={{
@@ -41,10 +71,11 @@ const Login: React.FC<IProps> = ({ navigation }) => {
             </ThemedText>
 
             <InputField
-                value={loginData.email}
-                onChangeText={(text) => setLoginData({ ...loginData, email: text })}
+                value={loginData.email_address}
+                onChangeText={(text) => setLoginData({ ...loginData, email_address: text })}
                 label='Email address'
                 keyboardType='email-address'
+                autoCapitalize="none"
             />
             <PasswordInput
                 value={loginData.password}
@@ -55,7 +86,8 @@ const Login: React.FC<IProps> = ({ navigation }) => {
             <Button
                 enabled={canProceed}
                 title='Sign In'
-                onPress={() => login('gyhbnj', { email: loginData.email, id: loginData.password, name: 'name' })}
+                loading={mutation.isPending}
+                onPress={() => mutation.mutate()}
             />
 
             <ThemedText type='link' style={{
