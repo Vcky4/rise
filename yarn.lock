@@ -1909,6 +1909,18 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@tanstack/query-core@5.59.9":
+  version "5.59.9"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.59.9.tgz"
+  integrity sha512-vFGnblfJOKlOPyTR5M0ohWKb/03eGubh5KuGyzsDfc7VQ6F0nsB75kQIoLpwp3Wfj6fKv0wGoTUX8BsIfhxDfw==
+
+"@tanstack/react-query@^5.59.9":
+  version "5.59.9"
+  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.59.9.tgz"
+  integrity sha512-g2cbiw/ZIIrnUaQqhGtarTAsuLdKDNLtY5HNfRHVWY9kHDj96M4qs4ygJxHc119tPQpzZe4i9W7d2Gc2Gvng2A==
+  dependencies:
+    "@tanstack/query-core" "5.59.9"
+
 "@types/babel__core@^7.1.14":
   version "7.20.5"
   resolved "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz"

@@ -18,7 +18,7 @@ interface IProps {
 
 
 const Success: React.FC<IProps> = ({ navigation, route }) => {
-    const { token } = useContext(AuthContext);
+    const { token, pin } = useContext(AuthContext);
     const props = route.params;
     return (
         <View style={styles.container}>
@@ -49,7 +49,9 @@ const Success: React.FC<IProps> = ({ navigation, route }) => {
                 enabled={true}
                 title="Okay"
                 onPress={() => navigation.navigate(
-                    token ? mainRouts.home : authRouts.login
+                    token
+                        ? pin ? mainRouts.home : mainRouts.setPin
+                        : authRouts.login
                 )}
             />
         </View>
