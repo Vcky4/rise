@@ -6,6 +6,7 @@ const mainRouts = {
     account: 'Account',
     wallet: 'Wallet',
     feeds: 'Feeds',
+    createPlan: 'CreatePlan',
 }
 
 export default mainRouts;

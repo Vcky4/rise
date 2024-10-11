@@ -13,6 +13,7 @@ import Wallet from "../../screens/wallet/Wallet";
 import Feeds from "../../screens/feeds/Feeds";
 import Account from "../../screens/account/Account";
 import { ThemedText } from "../../component/ThemedText";
+import CreatePlans from "../../screens/plans/CreatePlan";
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -26,7 +27,11 @@ const Stack = createNativeStackNavigator();
 const MainStack: React.FC<IProps> = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? mainRouts.setPin;
   return (
-    <>
+    <View style={{
+      paddingTop: Platform.OS === 'ios' && routeName === mainRouts.home ? 50 : 0,
+      flex: 1,
+      backgroundColor: colors.white
+    }}>
       <BtStack.Navigator>
         <Stack.Screen name={mainRouts.setPin} component={SetPin} options={{ headerShown: false }} />
 
@@ -40,6 +45,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
         <BtStack.Screen name={mainRouts.wallet} component={Wallet} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.feeds} component={Feeds} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.account} component={Account} options={{ headerShown: false }} />
+        <BtStack.Screen name={mainRouts.createPlan} component={CreatePlans} options={{ headerShown: false }} />
 
       </BtStack.Navigator>
 
@@ -57,7 +63,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
       }}>
         {[
           { name: mainRouts.home, icon: require('../../../assets/images/home.png') },
-          { name: mainRouts.plans, icon: require('../../../assets/images/plans.png') },
+          { name: mainRouts.createPlan, icon: require('../../../assets/images/plans.png') },
           { name: mainRouts.wallet, icon: require('../../../assets/images/wallet.png') },
           { name: mainRouts.feeds, icon: require('../../../assets/images/feeds.png') },
           { name: mainRouts.account, icon: require('../../../assets/images/account.png') },
@@ -72,25 +78,25 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
           }}>
           <Icon source={e.icon}
             size={32}
-            color={(e.name === mainRouts.home ) ? routeName === e.name ? colors.primary : colors.textGray : undefined}
+            color={(e.name === mainRouts.home) ? routeName === e.name ? colors.primary : colors.textGray : undefined}
           />
           <ThemedText style={{
-            color:  colors.textGray ,
+            color: colors.textGray,
             fontSize: 14,
             display: routeName !== e.name ? 'flex' : 'none',
           }}>{e.name}</ThemedText>
           <Icon source={require('../../../assets/images/dot.png')}
             size={15}
             color={colors.primary}
-           style={{
-            display: routeName === e.name ? 'flex' : 'none',
-          }}/>
+            style={{
+              display: routeName === e.name ? 'flex' : 'none',
+            }} />
         </TouchableOpacity>
 
         )}
       </View>
 
-    </>
+    </View>
   );
 };
 
