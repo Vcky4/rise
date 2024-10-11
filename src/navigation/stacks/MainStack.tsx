@@ -15,6 +15,7 @@ import Account from "../../screens/account/Account";
 import { ThemedText } from "../../component/ThemedText";
 import CreatePlans from "../../screens/plans/CreatePlan";
 import FundWallet from "../../screens/home/AddFund";
+import PlansDetails from "../../screens/plans/PlanDetails";
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -65,7 +66,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
       }}>
         {[
           { name: mainRouts.home, icon: require('../../../assets/images/home.png') },
-          { name: mainRouts.createPlan, icon: require('../../../assets/images/plans.png') },
+          { name: mainRouts.plans, icon: require('../../../assets/images/plans.png') },
           { name: mainRouts.wallet, icon: require('../../../assets/images/wallet.png') },
           { name: mainRouts.feeds, icon: require('../../../assets/images/feeds.png') },
           { name: mainRouts.account, icon: require('../../../assets/images/account.png') },
