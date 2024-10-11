@@ -7,6 +7,7 @@ const mainRouts = {
     wallet: 'Wallet',
     feeds: 'Feeds',
     createPlan: 'CreatePlan',
+    fundWallet:'FundWallet'
 }
 
 export default mainRouts;

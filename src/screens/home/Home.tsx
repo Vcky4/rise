@@ -14,6 +14,7 @@ import {ThemedText} from '../../component/ThemedText';
 import Icon from '../../component/Icon';
 import Button from '../../component/Button';
 import LinearGradient from 'react-native-linear-gradient';
+import mainRouts from '../../navigation/routs/mainRouts';
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -196,7 +197,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
 
           <TouchableOpacity
           onPress={()=>{
-            
+            navigation.navigate(mainRouts.fundWallet)
           }}
             style={{
               flexDirection: 'row',
