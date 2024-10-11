@@ -27,7 +27,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
         source={require('../../../assets/images/overlay.png')}
       />
 
-      <View style={[styles.header,{ paddingTop: Platform.OS === 'ios' ? 60 : 0}]}>
+      <View style={[styles.header,{ paddingTop: Platform.OS === 'ios' ? 60 : 10}]}>
         <ThemedText
           style={{
             color: colors.text,
