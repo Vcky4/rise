@@ -47,11 +47,12 @@ const Success: React.FC<IProps> = ({ navigation, route }) => {
             </View>
             <Button
                 enabled={true}
-                title="Okay"
+                title={props?.buttonTitle || "Okay"}
                 onPress={() => navigation.navigate(
-                    token
-                        ? pin ? mainRouts.home : mainRouts.setPin
-                        : authRouts.login
+                    props?.buttonTitle ? props.to
+                        : token
+                            ? pin ? mainRouts.home : mainRouts.setPin
+                            : authRouts.login
                 )}
             />
         </View>
