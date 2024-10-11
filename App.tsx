@@ -39,20 +39,20 @@ export default function App() {
     })
   })
   if (Platform.OS == 'ios') {
-    StatusBar.setBarStyle('light-content', true);	//<<--- add this
+    StatusBar.setBarStyle('dark-content', true);	//<<--- add this
   }
   return (
     <View style={{
       flex: 1,
-      backgroundColor: "#0898A0",
-      paddingTop: Platform.OS === 'ios' ? 50 : 0
+      backgroundColor: "transperent",
+      // paddingTop: Platform.OS === 'ios' ? 50 : 0
     }}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <AuthContextProvider>
-              <StatusBar backgroundColor={"#0898A0"} />
-              <RootNavigator />
+            <StatusBar backgroundColor={"transperent"} />
+            <RootNavigator />
             </AuthContextProvider>
             <Toast />
           </PersistGate>
