@@ -3,5 +3,6 @@ export default interface IPlans {
     goal_name: string;
     target_amount: number;
     maturity_date: string;
-    randomId: number
+    randomId: number,
+    balance?: number
   }

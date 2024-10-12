@@ -20,7 +20,7 @@ const images = [
     require('../../../assets/images/plancard1.png'),
     require('../../../assets/images/plancard2.png'),
     require('../../../assets/images/plancard3.png'),
-  ];
+];
 const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
     return (
         <TouchableOpacity
@@ -40,7 +40,7 @@ const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
             >
 
                 <Image
-                    source={images[item.randomId]}
+                    source={images[item.randomId % 3]}
                     style={{
                         width: '120%',
                         height: '120%',

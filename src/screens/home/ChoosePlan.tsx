@@ -27,26 +27,7 @@ interface IProps {
 const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
   const {plans} = usePlan()
 
-  const data = [
-    {
-      icon: require('../../../assets/images/plancard1.png'),
-      title: 'Plan a wedding',
-      ammount: '$1,983.09',
-      bg: '#ADA3F2'
-    },
-    {
-      icon: require('../../../assets/images/plancard2.png'),
-      title: 'Start a Business',
-      ammount: '$1,983.09',
-      bg: '#ADA3F2'
-    },
-    {
-      icon: require('../../../assets/images/plancard3.png'),
-      title: 'Build Wealth',
-      ammount: '$1,983.09',
-      bg: '#ADA3F2'
-    },
-  ];
+console.log(plans)
   return (
     <View style={styles.container}>
       <View
@@ -99,6 +80,9 @@ const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
       </ThemedText>
 
       <FlatList
+      style={{
+        width: '100%'
+      }}
       contentContainerStyle={{
         gap:10,
       }}

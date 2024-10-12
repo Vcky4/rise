@@ -9,6 +9,10 @@ import InputField from "../../component/InputField";
 import DatePicker from "react-native-date-picker";
 import { LineChart } from "react-native-gifted-charts";
 import mainRouts from "../../navigation/routs/mainRouts";
+import { usePlan } from "../../hooks/usePlan";
+import generateIds from "../../utils/generateIds";
+import formatNumber from "../../utils/formatNumber";
+import calculateMonthlyAmount from "../../utils/getMonthlyAmount";
 
 
 interface IProps {
@@ -34,6 +38,7 @@ const tips = [
 ]
 
 const CreatePlans: React.FC<IProps> = ({ navigation }) => {
+    const { createPlan } = usePlan()
     const [step, setStep] = React.useState(0);
     const [planData, setPlanData] = React.useState({
         "plan_name": '',
@@ -126,8 +131,8 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                     gap: 24,
                     width: '100%',
                     paddingVertical: 10,
-                    paddingHorizontal: step <= 3 ? 20: 0,
-                   flexGrow: 1
+                    paddingHorizontal: step <= 3 ? 20 : 0,
+                    flexGrow: 1
                 }}>
 
                 {step <= 3 &&
@@ -274,16 +279,16 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                             color: colors.textGray,
                             alignSelf: 'center',
                             fontSize: 12,
-                        }}>Kate Ventures
+                        }}>{planData.plan_name}
                         </ThemedText>
                         <ThemedText type='title' style={{
                             alignSelf: 'center',
-                        }}>$10,930.75
+                        }}>${formatNumber(parseFloat(planData.target_amount))}
                         </ThemedText>
                         <ThemedText style={{
                             alignSelf: 'center',
                             fontSize: 15,
-                        }}>by 20 June 2021
+                        }}>by {date.toDateString()}
                         </ThemedText>
 
                         <View style={{
@@ -403,7 +408,7 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
 
                             <ThemedText style={{
                                 fontSize: 15,
-                            }}>$120
+                            }}>${formatNumber(calculateMonthlyAmount(date, parseFloat(planData.target_amount)))}
                             </ThemedText>
                         </View>
 
@@ -450,7 +455,7 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                     justifyContent: step === 0 ? 'flex-end' : undefined,
                     marginBottom: '15%',
                     gap: 10,
-                    paddingHorizontal: step > 3 ? 20: 0,
+                    paddingHorizontal: step > 3 ? 20 : 0,
                 }}>
                     <Button
                         title={step <= 3 ? "Continue" : 'Agree & Continue'}
@@ -458,11 +463,23 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                             if (step <= 3) {
                                 setStep(step + 1)
                             } else {
+                                const ids = generateIds()
+                                createPlan({
+                                    id: ids.id,
+                                    goal_name: planData.plan_name,
+                                    maturity_date: planData.maturity_date,
+                                    target_amount: parseFloat(planData.target_amount),
+                                    randomId: ids.randomId,
+                                    balance: 0
+                                })
                                 navigation.replace(mainRouts.success, {
                                     title: 'You just created your plan.',
                                     desc: 'Well done, Deborah',
                                     buttonTitle: 'View Plan',
-                                    to: mainRouts.planDetails
+                                    to: mainRouts.planDetails,
+                                    data: {
+                                        id: ids.id
+                                    }
                                 })
                             }
                         }}
