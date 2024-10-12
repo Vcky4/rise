@@ -1,4 +1,67 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Rise App
+
+## Overview
+
+The Rise App is a mobile application built using React Native, showcasing various features that enable users to manage their investment plans effectively. This README provides insights into the file structure, technologies used, challenges faced during development, and the workarounds implemented to ensure a smooth user experience.
+
+## File Structure
+
+```
+rise/
+├── assets/                     # Static assets like images and icons
+├── components/                 # Reusable UI components
+├── context/                    # Context providers for global state management
+├── hooks/                      # Custom React hooks for encapsulating reusable logic
+├── network/                    # API services for managing network requests
+├── navigation/                 # Navigation configuration using React Navigation
+├── redux/                      # Redux-related files for global state management
+├── screens/                    # Individual screen components for different pages
+├── utils/                      # Utility functions for common operations
+├── App.tsx                     # Main entry point of the application
+├── package.json                # Project dependencies and scripts
+├── tsconfig.json               # TypeScript configuration file
+└── README.md                   # Project documentation
+```
+
+## Technologies Used
+
+- **TypeScript**: The application is developed using TypeScript, which enhances code quality through static typing and facilitates easier debugging and refactoring.
+
+- **React Hooks**: The project leverages React Hooks for managing state and side effects, allowing for more functional and reusable components.
+
+- **React Navigation 5**: This library is used to handle navigation between different screens, providing a fluid user experience with deep linking and stack navigation.
+
+- **Proper Error Handling**: The app implements robust error handling mechanisms to manage API response errors gracefully, ensuring users receive appropriate feedback when issues occur.
+
+- **React Query**: For efficient data fetching and state synchronization, React Query is utilized, allowing for automatic caching and updating of server data.
+
+- **Minimal Redux Usage**: Redux is utilized minimally for global state management. Combined with AsyncStorage, it allows for persistent data storage across app restarts, ensuring that user preferences and data are retained even when the app is closed.
+
+## Challenges
+
+The development of the Rise App encountered several challenges:
+
+1. **Base URL Discrepancy**: The sign-up endpoint uses a different base URL from the other API endpoints:
+   - **First Base URL**: `https://manator-staging-qogza.ondigitalocean.app/api/v1`
+   - **Second Base URL**: `https://rise-rn-test-api-gb2v6.ondigitalocean.app/api/v1/`
+
+   Attempts to utilize the second base URL for signing up were unsuccessful, while the first base URL successfully processed sign-up requests.
+
+2. **Authentication Issues**: The absence of a valid token restricted access to other API endpoints, which required authorization. The login endpoint could not be used to obtain a token due to the discrepancies with the base URLs.
+
+3. **Endpoint Limitations**: When trying to use a single base URL for all endpoints, only the sign-up endpoint successfully responded when using the first base URL.
+
+## Workaround
+
+To address the issues stemming from the unreliable API, several workarounds were implemented:
+
+- **Demo Account**: A demo account was set up to facilitate basic functionality and allow testing of the app’s features.
+
+- **Local Data Persistence**: Utilizing AsyncStorage in conjunction with Redux allows for the persistence of user data across app restarts. This ensures that essential user information and preferences remain accessible, providing a seamless experience even when the network is unavailable.
+
+## Test APK
+
+A workable APK can be downloaded using this link: https://drive.google.com/file/d/1J7-PAFlPIxUVxnOwnneYveyqg4dRG15k/view?usp=sharing 
 
 # Getting Started
 
@@ -46,34 +109,8 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Conclusion
 
-Now that you have successfully run the app, let's modify it.
+The Rise App demonstrates effective management of investment plans while overcoming various development challenges. By utilizing modern technologies and implementing practical workarounds, the app provides a robust platform for users.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+For further details or contributions, feel free to reach out or submit pull requests.
