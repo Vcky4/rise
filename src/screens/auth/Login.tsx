@@ -27,6 +27,7 @@ const Login: React.FC<IProps> = ({ navigation }) => {
         password: ''
     });
     const auth = useAuth()
+    const [showDemo, setShowDemo] = React.useState(false);
 
     //email regex
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -46,20 +47,7 @@ const Login: React.FC<IProps> = ({ navigation }) => {
                     text1: 'Error',
                     text2: data?.err?.message
                 })
-                login(
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpY2tzb3NvbkBnbWFpbC5jb20iLCJpZCI6MTQwOCwicm9sZSI6ImludmVzdG9yIiwiYWNjb3VudElkIjoxNDAzLCJzZXNzaW9uSWQiOiIyNGUxOWMzOS1iMjc3LTQ3YTEtYmFjYS00NGNjYzNhZWQxNTciLCJ1dWlkIjoiZTc2ODMxMzMtM2RkOS00Mzk4LWI1NzktNDQ3Y2Q1ZjYwYTNkIiwiZW1haWxWZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6ImFjdGl2ZSIsImFjY291bnRVVUlEIjoiMWNhODRmOTktNjFlMi00MTVkLTljNTUtODEyNjcxMmJhZDFkIiwiaWRWZXJpZmllZCI6ZmFsc2UsImNvdW50cnkiOiJuZyIsImN1cnJlbnRBcHBWZXJzaW9uIjpudWxsLCJtZXRhZGF0YSI6eyJpZE5vdGlmaWNhdGlvbkNvdW50IjowLCJuZXh0SWRSZW1pbmRlckRhdGUiOiIyMDI0LTEwLTEyVDAwOjAwOjAwLjAwMFoifSwib3JpZ2luIjoiMTk3LjIxMC44NC42MSwxNzIuNzAuNDYuMTA0IiwiaWF0IjoxNzI4NjQ4Mzk0LCJleHAiOjE3MzM4MzIzOTR9.v_SBNBpRmTNgL7zqswHtnLDxmWl0py5pKOMQQf4ss_s',
-                    {
-                        id: '1408',
-                        email_address: 'victor@gmail.com',
-                        first_name: 'string',
-                        last_name: 'string',
-                        username: 'string',
-                        iat: 2,
-                        exp: 2,
-                        total_balance: 1000,
-                        total_returns: 1000,
-                    } as IUser
-                )
+                setShowDemo(true)
 
             }
         },
@@ -69,6 +57,7 @@ const Login: React.FC<IProps> = ({ navigation }) => {
                 text1: 'Error',
                 text2: err?.message
             })
+            setShowDemo(true)
         }
     })
     return (
@@ -126,6 +115,78 @@ const Login: React.FC<IProps> = ({ navigation }) => {
                     onPress={() => navigation.navigate(authRouts.signUp)}
                 > Sign up</ThemedText>
             </ThemedText>
+
+            <View style={{
+                width: '100%',
+                position: 'absolute',
+                backgroundColor: colors.white,
+                alignSelf: 'center',
+                borderRadius: 10,
+                borderColor: colors.border,
+                borderWidth: 1,
+                padding: 16,
+                elevation: 5,
+                top: '40%',
+                display: showDemo ? 'flex' : 'none',
+            }}>
+                <ThemedText type='subtitle' style={{
+
+                }}>Notice</ThemedText>
+                <ThemedText style={{
+                    color: colors.textGray,
+                    width: '95%',
+                    marginBottom: 12
+                }}>
+                    Seems you are unable to login. Would you like to try the Demo account?
+                </ThemedText>
+
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10,
+                    width: '100%',
+                    alignItems: 'flex-end',
+                }}>
+                    <Button
+                        title='Yes'
+                        buttonStyle={{
+                            width: 80,
+                            height: 40,
+                        }}
+                        enabled
+                        onPress={() => {
+                            login(
+                                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpY2tzb3NvbkBnbWFpbC5jb20iLCJpZCI6MTQwOCwicm9sZSI6ImludmVzdG9yIiwiYWNjb3VudElkIjoxNDAzLCJzZXNzaW9uSWQiOiIyNGUxOWMzOS1iMjc3LTQ3YTEtYmFjYS00NGNjYzNhZWQxNTciLCJ1dWlkIjoiZTc2ODMxMzMtM2RkOS00Mzk4LWI1NzktNDQ3Y2Q1ZjYwYTNkIiwiZW1haWxWZXJpZmllZCI6ZmFsc2UsInN0YXR1cyI6ImFjdGl2ZSIsImFjY291bnRVVUlEIjoiMWNhODRmOTktNjFlMi00MTVkLTljNTUtODEyNjcxMmJhZDFkIiwiaWRWZXJpZmllZCI6ZmFsc2UsImNvdW50cnkiOiJuZyIsImN1cnJlbnRBcHBWZXJzaW9uIjpudWxsLCJtZXRhZGF0YSI6eyJpZE5vdGlmaWNhdGlvbkNvdW50IjowLCJuZXh0SWRSZW1pbmRlckRhdGUiOiIyMDI0LTEwLTEyVDAwOjAwOjAwLjAwMFoifSwib3JpZ2luIjoiMTk3LjIxMC44NC42MSwxNzIuNzAuNDYuMTA0IiwiaWF0IjoxNzI4NjQ4Mzk0LCJleHAiOjE3MzM4MzIzOTR9.v_SBNBpRmTNgL7zqswHtnLDxmWl0py5pKOMQQf4ss_s',
+                                {
+                                    id: '1408',
+                                    email_address: 'victor@gmail.com',
+                                    first_name: 'Debora',
+                                    last_name: 'Sam',
+                                    username: 'debby',
+                                    iat: 2,
+                                    exp: 2,
+                                    total_balance: 1000,
+                                    total_returns: 1000,
+                                } as IUser
+                            )
+                            setShowDemo(false)
+                        }}
+                    />
+                    <Button
+                        title='No'
+                        buttonColor={colors.borderInactive}
+                        textColor={colors.primary}
+                        buttonStyle={{
+                            width: 80,
+                            height: 40,
+                        }}
+                        enabled
+                        onPress={() => {
+                            setShowDemo(false)
+                        }}
+                    />
+                </View>
+
+            </View>
         </View>
 
     )
