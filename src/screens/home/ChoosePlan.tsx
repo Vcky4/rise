@@ -19,6 +19,7 @@ import InputField from '../../component/InputField';
 import DatePicker from 'react-native-date-picker';
 import {createEntityAdapter} from '@reduxjs/toolkit';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import mainRouts from '../../navigation/routs/mainRouts';
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -100,8 +101,11 @@ const ChoosePlan: React.FC<IProps> = ({navigation}) => {
         data={data}
         numColumns={2}
         renderItem={({item}) => (
-     <View style={{width:'50%',}}>
-
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(mainRouts.selectBank);
+            }}
+            style={{width: '50%'}}>
             <ImageBackground
               style={{
                 // position: 'absolute',
@@ -109,51 +113,47 @@ const ChoosePlan: React.FC<IProps> = ({navigation}) => {
                 height: 270,
                 borderRadius: 15,
               }}
-              source={item.icon}
-            >
+              source={item.icon}>
+              <View style={{height: '80%', justifyContent: 'flex-end'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                  }}>
+                  <View>
+                    <ThemedText
+                      type="subtitle"
+                      style={{
+                        fontSize: 15,
+                        textAlign: 'start',
+                        color: colors.white,
+                        // fontFamily:'DMSans-Bold'
+                      }}>
+                      {item.title}
+                    </ThemedText>
 
-            <View style={{height:'80%', justifyContent: 'flex-end'}}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-around',
-                
-                }}>
-                <View>
-                  <ThemedText
-                    type="subtitle"
-                    style={{
-                      fontSize: 15,
-                      textAlign: 'start',
-                      color: colors.white,
-                      // fontFamily:'DMSans-Bold'
-                    }}>
-                    {item.title}
-                  </ThemedText>
+                    <ThemedText
+                      type="subtitle"
+                      style={{
+                        fontSize: 15,
+                        textAlign: 'start',
+                        color: colors.white,
+                        // fontFamily:'DMSans-Bold'
+                      }}>
+                      {item.ammount}
+                    </ThemedText>
+                  </View>
 
-                  <ThemedText
-                    type="subtitle"
-                    style={{
-                      fontSize: 15,
-                      textAlign: 'start',
-                      color: colors.white,
-                      // fontFamily:'DMSans-Bold'
-                    }}>
-                    {item.ammount}
-                  </ThemedText>
+                  <Icon
+                    color={colors.white}
+                    source={require('../../../assets/images/arrow-f.png')}
+                    size={14}
+                  />
                 </View>
-
-                <Icon
-                  color={colors.white}
-                  source={require('../../../assets/images/arrow-f.png')}
-                  size={14}
-                />
               </View>
-            </View>
             </ImageBackground>
-        </View>
-       
+          </TouchableOpacity>
         )}
       />
     </View>

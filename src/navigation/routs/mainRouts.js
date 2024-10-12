@@ -9,7 +9,8 @@ const mainRouts = {
     createPlan: 'CreatePlan',
     planDetails: 'PlanDetails',
     fundWallet:'FundWallet',
-    chooseplan:'Chooseplan'
+    chooseplan:'Chooseplan',
+    selectBank:'SelectBank'
 }
 
 export default mainRouts;

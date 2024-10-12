@@ -17,6 +17,7 @@ import CreatePlans from "../../screens/plans/CreatePlan";
 import FundWallet from "../../screens/home/AddFund";
 import PlansDetails from "../../screens/plans/PlanDetails";
 import ChoosePlan from "../../screens/home/ChoosePlan";
+import SelectBank from "../../screens/home/SelectBank";
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -50,6 +51,8 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
         <BtStack.Screen name={mainRouts.account} component={Account} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.createPlan} component={CreatePlans} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.fundWallet} component={FundWallet} options={{ headerShown: false }} />
+        <BtStack.Screen name={mainRouts.chooseplan} component={ChoosePlan} options={{ headerShown: false }} />
+        <BtStack.Screen name={mainRouts.selectBank} component={SelectBank} options={{ headerShown: false }} />
 
       </BtStack.Navigator>
 
