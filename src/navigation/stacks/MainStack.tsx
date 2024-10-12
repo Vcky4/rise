@@ -15,6 +15,7 @@ import Account from "../../screens/account/Account";
 import { ThemedText } from "../../component/ThemedText";
 import CreatePlans from "../../screens/plans/CreatePlan";
 import FundWallet from "../../screens/home/AddFund";
+import ChoosePlan from "../../screens/home/ChoosePlan";
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -48,6 +49,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
         <BtStack.Screen name={mainRouts.account} component={Account} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.createPlan} component={CreatePlans} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.fundWallet} component={FundWallet} options={{ headerShown: false }} />
+        <BtStack.Screen name={mainRouts.chooseplan} component={ChoosePlan} options={{ headerShown: false }} />
 
       </BtStack.Navigator>
 

@@ -8,7 +8,8 @@ const mainRouts = {
     feeds: 'Feeds',
     createPlan: 'CreatePlan',
     planDetails: 'PlanDetails',
-    fundWallet:'FundWallet'
+    fundWallet:'FundWallet',
+    chooseplan:'Chooseplan'
 }
 
 export default mainRouts;
