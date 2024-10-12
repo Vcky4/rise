@@ -7,11 +7,15 @@ import { ThemedText } from "../../component/ThemedText";
 import Button from "../../component/Button";
 import { LineChart } from "react-native-gifted-charts";
 import mainRouts from "../../navigation/routs/mainRouts";
+import { RouteProp } from "@react-navigation/native";
+import { usePlan } from "../../hooks/usePlan";
+import formatNumber from "../../utils/formatNumber";
 
 
 
 interface IProps {
     navigation: NativeStackNavigationProp<any>;
+    route: RouteProp<any, any>;
 }
 
 const summary = [
@@ -93,13 +97,15 @@ const transactions = [
 ]
 
 
-const PlansDetails: React.FC<IProps> = ({ navigation }) => {
+const PlansDetails: React.FC<IProps> = ({ navigation, route }) => {
+    const { getPlan } = usePlan()
+    const props = route.params
     const [selected, setSelected] = React.useState('1M');
     const data = [{ value: 25000, date: '2034' }, { value: 28000, date: '2035' }, { value: 75000, date: '2036' }, { value: 45000, date: '2037' }, { value: 55000, date: '2038' }, { value: 40000, date: '2039' }]
     const data1 = [{ value: 22000, date: '2034' }, { value: 26000, date: '2035' }, { value: 70000, date: '2036' }, { value: 35000, date: '2037' }, { value: 45000, date: '2038' }, { value: 30000, date: '2039' }]
     const data2 = [{ value: 26000, date: '2034' }, { value: 59000, date: '2035' }, { value: 42000, date: '2036' }, { value: 55000, date: '2037' }, { value: 25000, date: '2038' }, { value: 50000, date: '2039' }]
     const data3 = [{ value: 24000, date: '2034' }, { value: 30000, date: '2035' }, { value: 65000, date: '2036' }, { value: 35000, date: '2037' }, { value: 45000, date: '2038' }, { value: 60000, date: '2039' }]
-
+    const plan = getPlan(props?.id)
     const chart = {
         '1M': data,
         '3M': data1,
@@ -143,7 +149,7 @@ const PlansDetails: React.FC<IProps> = ({ navigation }) => {
                         color: colors.white,
                         fontSize: 24,
                     }}>Start a business</ThemedText>
-                    <ThemedText style={{ color: colors.white }}>for Kate Ventures</ThemedText>
+                    <ThemedText style={{ color: colors.white }}>{plan?.goal_name}</ThemedText>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -175,7 +181,7 @@ const PlansDetails: React.FC<IProps> = ({ navigation }) => {
                     }}>Plan Balance</ThemedText>
                     <ThemedText type='title' style={{
                         alignSelf: 'center',
-                    }}>$10,930.75
+                    }}>${formatNumber(plan?.balance ?? 0)}
                     </ThemedText>
                     <View style={{
                         flexDirection: 'row',
@@ -241,8 +247,8 @@ const PlansDetails: React.FC<IProps> = ({ navigation }) => {
 
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate(mainRouts.selectBank,{
-                                id: ''
+                            navigation.navigate(mainRouts.selectBank, {
+                                id: plan?.id
                             })
                         }}
                         style={{

@@ -14,24 +14,30 @@ export function usePlan() {
     }
 
     function fundPlan(id: string) {
-        const plan = plans?.find((plan) => plan.id === id)
+        const plan = plans?.find((plan) => plan.id === id);
+
         if (plan) {
+            // Calculate the new balance correctly
+            const currentBalance = plan.balance ?? 0; // Default to 0 if balance is undefined
+            const monthlyAmount = calculateMonthlyAmount(
+                new Date(plan.maturity_date),
+                plan.target_amount
+            );
+
             setPlans([
-                ...(plans || [])?.filter((pl) => pl.id === id),
+                ...(plans || []).filter((pl) => pl.id !== id), // Filter out the current plan
                 {
                     ...plan,
-                    balance: plan.balance ?? 0 + calculateMonthlyAmount(
-                        new Date(plan.maturity_date),
-                        plan.target_amount
-                    )
+                    balance: currentBalance + monthlyAmount // Update the balance
                 }
-            ])
+            ]);
         }
     }
 
     return {
         plans: plans || [],
         createPlan,
-        fundPlan
+        fundPlan,
+        getPlan
     }
 }

@@ -17,6 +17,7 @@ import mainRouts from '../../navigation/routs/mainRouts';
 import PlanItem from './PlanItem';
 import getGreeting from '../../utils/getGreeting';
 import { useHome } from '../../hooks/useHome';
+import IPlans from '../../network/models/IPlans';
 
 
 interface IProps {
@@ -281,7 +282,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
 
           <FlatList
             data={[
-              'create',
+              { id: 'create' }, // Wrap "create" in an object
               ...plans
             ]}
             showsHorizontalScrollIndicator={false}
@@ -291,12 +292,14 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               gap: 10,
               marginTop: 10
             }}
-            keyExtractor={(item)=> item.toString()}
+            keyExtractor={(item, index) => {
+              // Generate a unique key for the "create" button and use the plan's id for plans
+              return item.id === 'create' ? `create-${index}` : item.id;
+            }}
             renderItem={({ item }) => (
-              typeof item === 'string'
-                ?
+              item.id === 'create' ? (
                 <TouchableOpacity onPress={() => {
-                  navigation.navigate(mainRouts.createPlan)
+                  navigation.navigate(mainRouts.createPlan);
                 }}
                   style={{
                     height: 243,
@@ -319,17 +322,19 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                       fontFamily: 'DMSans-Bold',
                       marginTop: 7,
                     }}>
-                    {' '}
                     Create an investment plan
                   </ThemedText>
                 </TouchableOpacity>
-                : <PlanItem item={item} width={170} height={243} onPress={() => {
+              ) : (
+                <PlanItem item={item as IPlans} width={170} height={243} onPress={() => {
                   navigation.navigate(mainRouts.planDetails, {
-                    id:item.id
+                    id: item.id
                   });
                 }} />
+              )
             )}
           />
+
 
           <View
             style={{
