@@ -64,14 +64,14 @@ const SetPin: React.FC<IProps> = ({ navigation }) => {
             // setStep(2);
             if (canProceed) {
                 setPin(data.pin);
-                navigation.navigate(mainRouts.success, {
+                navigation.replace(mainRouts.success, {
                     title: 'You’ve created your PIN',
                     desc: 'Keep your account safe with your secret PIN. Do not share this PIN with anyone.'
                 })
             } else setError(true)
         } else if (step === 2 && data.confirmPin.length === 6) {
             if (confirmPin(data.confirmPin)) {
-                navigation.navigate(mainRouts.success, {
+                navigation.replace(mainRouts.success, {
                     title: 'Welcome back',
                     desc: 'Let’s get you logged in to get back to building your dollar-denominated investment portfolio.'
                 });
