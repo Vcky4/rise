@@ -3,23 +3,24 @@ import { View, StyleSheet, TouchableOpacity, ImageBackground, Dimensions, Dimens
 import colors from "../../../assets/colors/colors";
 import Icon from "../../component/Icon";
 import { ThemedText } from "../../component/ThemedText";
+import IPlans from "../../network/models/IPlans";
 
 
 const { width } = Dimensions.get('window');
 
 
 interface IProps {
-    item: {
-        icon: any;
-        title: string;
-        ammount: string;
-    },
+    item: IPlans,
     onPress: () => void;
     width?: DimensionValue | undefined;
     height?: DimensionValue | undefined;
 }
 
-
+const images = [
+    require('../../../assets/images/plancard1.png'),
+    require('../../../assets/images/plancard2.png'),
+    require('../../../assets/images/plancard3.png'),
+  ];
 const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
     return (
         <TouchableOpacity
@@ -39,7 +40,7 @@ const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
             >
 
                 <Image
-                    source={item.icon}
+                    source={images[item.randomId]}
                     style={{
                         width: '120%',
                         height: '120%',
@@ -67,7 +68,7 @@ const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
                                     fontSize: 15,
                                     color: colors.white,
                                 }}>
-                                {item.title}
+                                {item.goal_name}
                             </ThemedText>
 
                             <ThemedText
@@ -76,7 +77,7 @@ const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
                                     fontSize: 15,
                                     color: colors.white,
                                 }}>
-                                {item.ammount}
+                                ${item.target_amount.toLocaleString()}
                             </ThemedText>
                         </View>
 

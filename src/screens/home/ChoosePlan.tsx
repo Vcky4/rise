@@ -13,6 +13,7 @@ import colors from '../../../assets/colors/colors';
 import { ThemedText } from '../../component/ThemedText';
 import mainRouts from '../../navigation/routs/mainRouts';
 import PlanItem from './PlanItem';
+import { usePlan } from '../../hooks/usePlan';
 
 
 
@@ -24,6 +25,7 @@ interface IProps {
 }
 
 const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
+  const {plans} = usePlan()
 
   const data = [
     {
@@ -104,7 +106,7 @@ const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
         justifyContent: 'space-between', 
         gap: 10,
       }}
-        data={data}
+        data={plans}
         numColumns={2}
         renderItem={({ item }) => (
           <PlanItem item={item} onPress={() => {

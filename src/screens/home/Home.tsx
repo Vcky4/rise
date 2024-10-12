@@ -23,30 +23,10 @@ interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const data = [
-  {
-    icon: require('../../../assets/images/plancard1.png'),
-    title: 'Plan a wedding',
-    ammount: '$1,983.09',
-    bg: '#ADA3F2'
-  },
-  {
-    icon: require('../../../assets/images/plancard2.png'),
-    title: 'Start a Business',
-    ammount: '$1,983.09',
-    bg: '#ADA3F2'
-  },
-  {
-    icon: require('../../../assets/images/plancard3.png'),
-    title: 'Build Wealth',
-    ammount: '$1,983.09',
-    bg: '#ADA3F2'
-  },
-];
 
 const Home: React.FC<IProps> = ({ navigation }) => {
   const [isVisible, setisVible] = React.useState(false);
-  const { user, balance, gain } = useHome()
+  const { user, balance, gain, plans } = useHome()
   return (
     <View style={styles.container}>
       <Image
@@ -266,14 +246,14 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                 textAlign: 'center',
                 fontSize: 18,
               }}>
-              Create a plan
+              {plans.length > 0 ? 'Your plans' : 'Create a plan'}
             </ThemedText>
 
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center' }}>
               <ThemedText type='defaultSemiBold'
                 style={{
-                  color: colors.lightGray,
+                  color: plans.length > 0 ? colors.primary : colors.lightGray,
                   textAlign: 'center',
                   fontSize: 14,
                   paddingEnd: 10,
@@ -291,11 +271,10 @@ const Home: React.FC<IProps> = ({ navigation }) => {
           <ThemedText
             style={{
               color: colors.textGray,
-              textAlign: 'left',
               fontSize: 15,
-              fontFamily: 'DMSans-Regular',
               marginTop: 12,
               width: '85%',
+              display: plans.length > 0 ? 'none' : 'flex'
             }}>
             Start your investment journey by creating a plan
           </ThemedText>
@@ -303,7 +282,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
           <FlatList
             data={[
               'create',
-              ...data
+              ...plans
             ]}
             showsHorizontalScrollIndicator={false}
             horizontal

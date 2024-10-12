@@ -13,7 +13,7 @@ export function usePlan() {
     }
 
     return {
-        plans,
+        plans: plans || [],
         createPlan
     }
 }
