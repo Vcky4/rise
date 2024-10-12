@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
+  FlatList,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import colors from '../../../assets/colors/colors';
@@ -13,10 +14,32 @@ import { ThemedText } from '../../component/ThemedText';
 import Icon from '../../component/Icon';
 import LinearGradient from 'react-native-linear-gradient';
 import mainRouts from '../../navigation/routs/mainRouts';
+import PlanItem from './PlanItem';
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
+
+const data = [
+  {
+    icon: require('../../../assets/images/plancard1.png'),
+    title: 'Plan a wedding',
+    ammount: '$1,983.09',
+    bg: '#ADA3F2'
+  },
+  {
+    icon: require('../../../assets/images/plancard2.png'),
+    title: 'Start a Business',
+    ammount: '$1,983.09',
+    bg: '#ADA3F2'
+  },
+  {
+    icon: require('../../../assets/images/plancard3.png'),
+    title: 'Build Wealth',
+    ammount: '$1,983.09',
+    bg: '#ADA3F2'
+  },
+];
 
 const Home: React.FC<IProps> = ({ navigation }) => {
   const [isVisible, setisVible] = React.useState(false);
@@ -116,7 +139,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                 paddingVertical: 15,
                 alignItems: 'center',
                 borderRadius: 10,
-                margin:0.2
+                margin: 0.2
               }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <ThemedText
@@ -196,9 +219,9 @@ const Home: React.FC<IProps> = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-          onPress={()=>{
-            navigation.navigate(mainRouts.fundWallet)
-          }}
+            onPress={() => {
+              navigation.navigate(mainRouts.fundWallet)
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -207,6 +230,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               marginTop: 24,
               paddingVertical: 15,
               borderWidth: 1,
+              borderRadius: 5,
               width: '100%',
               alignSelf: 'center',
               borderColor: colors.borderCOlor,
@@ -235,24 +259,21 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               marginTop: 31,
               justifyContent: 'space-between',
             }}>
-            <ThemedText
+            <ThemedText type='defaultSemiBold'
               style={{
-                color: colors.black,
                 textAlign: 'center',
                 fontSize: 18,
-                fontFamily: 'DMSans-Regular',
               }}>
               Create a plan
             </ThemedText>
 
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <ThemedText
+              <ThemedText type='defaultSemiBold'
                 style={{
                   color: colors.lightGray,
                   textAlign: 'center',
                   fontSize: 14,
-                  fontFamily: 'DMSans-Bold',
                   paddingEnd: 10,
                 }}>
                 View all plans
@@ -277,42 +298,60 @@ const Home: React.FC<IProps> = ({ navigation }) => {
             Start your investment journey by creating a plan
           </ThemedText>
 
-          <TouchableOpacity onPress={() => {
-            navigation.navigate(mainRouts.createPlan)
-          }}
-            style={{
-              height: 243,
-              width: 170,
-              backgroundColor: colors.borderCOlor,
-              paddingHorizontal: 20,
-              borderRadius: 12,
+          <FlatList
+            data={[
+              'create',
+              ...data
+            ]}
+
+            horizontal
+            contentContainerStyle={{
               alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 20,
-            }}>
-            <Icon
-              style={{ height: 42, width: 42 }}
-              source={require('../../../assets/images/addicon.png')}
-            />
-            <ThemedText
-              style={{
-                color: colors.textDark,
-                textAlign: 'center',
-                fontSize: 14,
-                fontFamily: 'DMSans-Bold',
-                marginTop: 7,
-              }}>
-              {' '}
-              Create an investment plan
-            </ThemedText>
-          </TouchableOpacity>
+              gap: 10,
+              marginTop: 10
+            }}
+            renderItem={({ item }) => (
+              typeof item === 'string'
+                ?
+                <TouchableOpacity onPress={() => {
+                  navigation.navigate(mainRouts.createPlan)
+                }}
+                  style={{
+                    height: 243,
+                    width: 170,
+                    backgroundColor: colors.borderCOlor,
+                    paddingHorizontal: 20,
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon
+                    style={{ height: 42, width: 42 }}
+                    source={require('../../../assets/images/addicon.png')}
+                  />
+                  <ThemedText
+                    style={{
+                      color: colors.textDark,
+                      textAlign: 'center',
+                      fontSize: 14,
+                      fontFamily: 'DMSans-Bold',
+                      marginTop: 7,
+                    }}>
+                    {' '}
+                    Create an investment plan
+                  </ThemedText>
+                </TouchableOpacity>
+                : <PlanItem item={item} width={170} height={243} onPress={() => {
+                  navigation.navigate(mainRouts.planDetails);
+                }} />
+            )}
+          />
 
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
-
               paddingVertical: 12,
               backgroundColor: colors.white,
               shadowColor: '#rgba(53, 71, 89, 0.15)',
@@ -320,13 +359,9 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                 width: 0,
                 height: 2,
               },
-              shadowOpacity: 1,
-              shadowRadius: 4.84,
-
               elevation: 5,
               marginTop: 31,
               borderRadius: 10,
-              paddingHorizontal: 10,
             }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
@@ -337,11 +372,9 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                 style={{
                   color: colors.textDark,
                   textAlign: 'center',
-                  fontSize: 14,
                   fontFamily: 'DMSans-Bold',
                   marginStart: 6,
                 }}>
-                {' '}
                 Need help?
               </ThemedText>
             </View>
@@ -351,7 +384,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                 backgroundColor: colors.primary,
                 padding: 10,
                 borderRadius: 8,
-                marginEnd: 20,
+                // marginEnd: 20,
                 width: 111,
               }}>
               <ThemedText
@@ -361,7 +394,6 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                   fontSize: 12,
                   fontFamily: 'DMSans-semiBold',
                 }}>
-                {' '}
                 Contact us
               </ThemedText>
             </TouchableOpacity>

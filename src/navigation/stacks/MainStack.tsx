@@ -53,6 +53,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
         <BtStack.Screen name={mainRouts.fundWallet} component={FundWallet} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.chooseplan} component={ChoosePlan} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.selectBank} component={SelectBank} options={{ headerShown: false }} />
+        <BtStack.Screen name={mainRouts.planDetails} component={PlansDetails} options={{ headerShown: false }} />
 
       </BtStack.Navigator>
 

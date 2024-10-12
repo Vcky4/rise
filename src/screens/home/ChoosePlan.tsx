@@ -97,6 +97,13 @@ const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
       </ThemedText>
 
       <FlatList
+      contentContainerStyle={{
+        gap:10,
+      }}
+      columnWrapperStyle={{
+        justifyContent: 'space-between', 
+        gap: 10,
+      }}
         data={data}
         numColumns={2}
         renderItem={({ item }) => (

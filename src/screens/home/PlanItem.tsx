@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
+import { View, StyleSheet, TouchableOpacity, ImageBackground, Dimensions, DimensionValue, Image } from "react-native";
 import colors from "../../../assets/colors/colors";
 import Icon from "../../component/Icon";
 import { ThemedText } from "../../component/ThemedText";
@@ -15,62 +15,80 @@ interface IProps {
         ammount: string;
     },
     onPress: () => void;
+    width?: DimensionValue | undefined;
+    height?: DimensionValue | undefined;
 }
 
 
-const PlanItem: React.FC<IProps> = ({ item, onPress }) => {
+const PlanItem: React.FC<IProps> = ({ item, onPress, width: wd, height }) => {
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={{ width: '50%' }}>
-            <ImageBackground
-              style={{
-                width: '100%',
-                height: width * 0.6,
+            style={{
+                width: wd || '48%',
+                height: height,
                 borderRadius: 15,
-              }}
-              source={item.icon}>
-              <View style={{
-                height: '100%',
-                justifyContent: 'flex-end',
-                paddingHorizontal: '10%',
-                paddingBottom: '19%',
-              }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                  }}>
-                  <View>
-                    <ThemedText
-                      type="subtitle"
-                      style={{
-                        fontSize: 15,
-                        color: colors.white,
-                      }}>
-                      {item.title}
-                    </ThemedText>
+                overflow: 'hidden',
+            }}>
+            <View
+                style={{
+                    width: wd || '100%',
+                    height: height ? '100%' : width * 0.6,
+                    position: 'relative',
+                }}
+            >
 
-                    <ThemedText
-                      type="subtitle"
-                      style={{
-                        fontSize: 15,
-                        color: colors.white,
-                      }}>
-                      {item.ammount}
-                    </ThemedText>
-                  </View>
+                <Image
+                    source={item.icon}
+                    style={{
+                        width: '120%',
+                        height: '120%',
+                        position: 'absolute',
+                        left: '-11%',
+                        top: '-5%',
+                    }}
+                    resizeMode="cover"
+                />
+                <View style={{
+                    height: '100%',
+                    justifyContent: 'flex-end',
+                    paddingBottom: 10,
+                }}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-around',
+                        }}>
+                        <View>
+                            <ThemedText
+                                type="subtitle"
+                                style={{
+                                    fontSize: 15,
+                                    color: colors.white,
+                                }}>
+                                {item.title}
+                            </ThemedText>
 
-                  <Icon
-                    color={colors.white}
-                    source={require('../../../assets/images/arrow-f.png')}
-                    size={14}
-                  />
+                            <ThemedText
+                                type="subtitle"
+                                style={{
+                                    fontSize: 15,
+                                    color: colors.white,
+                                }}>
+                                {item.ammount}
+                            </ThemedText>
+                        </View>
+
+                        <Icon
+                            color={colors.white}
+                            source={require('../../../assets/images/arrow-f.png')}
+                            size={14}
+                        />
+                    </View>
                 </View>
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
 
     )
 }

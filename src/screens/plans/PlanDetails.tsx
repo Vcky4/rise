@@ -6,6 +6,7 @@ import Icon from "../../component/Icon";
 import { ThemedText } from "../../component/ThemedText";
 import Button from "../../component/Button";
 import { LineChart } from "react-native-gifted-charts";
+import mainRouts from "../../navigation/routs/mainRouts";
 
 
 
@@ -238,16 +239,41 @@ const PlansDetails: React.FC<IProps> = ({ navigation }) => {
                         }}>Results are updated monthly</ThemedText>
                     </View>
 
-                    <Button
-                        title='+ Fund plan'
-                        onPress={() => { }}
-                        buttonColor={colors.borderInactive}
-                        textColor={colors.primary}
-                        buttonStyle={{
-                            width: '100%',
-                            marginTop: 20,
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate(mainRouts.selectBank)
                         }}
-                    />
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            backgroundColor: colors.white,
+                            justifyContent: 'center',
+                            marginTop: 24,
+                            paddingVertical: 15,
+                            borderWidth: 1,
+                            borderRadius: 5,
+                            width: '100%',
+                            alignSelf: 'center',
+                            borderColor: colors.borderInactive,
+                            marginVertical: 10,
+                        }}>
+                        <Icon
+                            style={{ height: 21, width: 21 }}
+                            source={require('../../../assets/images/add.png')}
+                        />
+
+                        <ThemedText
+                            style={{
+                                color: colors.primary,
+                                textAlign: 'center',
+                                fontSize: 15,
+                                fontFamily: 'DMSans-Bold',
+                            }}>
+                            {' '}
+                            Fund plan
+                        </ThemedText>
+                    </TouchableOpacity>
+
                     <View style={{
                         height: 400,
                         backgroundColor: colors.primary,
