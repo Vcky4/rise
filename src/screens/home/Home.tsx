@@ -303,7 +303,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               'create',
               ...data
             ]}
-
+            showsHorizontalScrollIndicator={false}
             horizontal
             contentContainerStyle={{
               alignItems: 'center',
