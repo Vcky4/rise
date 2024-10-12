@@ -12,6 +12,7 @@ import Icon from '../../component/Icon';
 import colors from '../../../assets/colors/colors';
 import { ThemedText } from '../../component/ThemedText';
 import mainRouts from '../../navigation/routs/mainRouts';
+import PlanItem from './PlanItem';
 
 
 
@@ -99,59 +100,9 @@ const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
         data={data}
         numColumns={2}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(mainRouts.selectBank);
-            }}
-            style={{ width: '50%' }}>
-            <ImageBackground
-              style={{
-                width: '100%',
-                height: width * 0.6,
-                borderRadius: 15,
-              }}
-              source={item.icon}>
-              <View style={{
-                height: '100%',
-                justifyContent: 'flex-end',
-                paddingHorizontal: '10%',
-                paddingBottom: '19%',
-              }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                  }}>
-                  <View>
-                    <ThemedText
-                      type="subtitle"
-                      style={{
-                        fontSize: 15,
-                        color: colors.white,
-                      }}>
-                      {item.title}
-                    </ThemedText>
-
-                    <ThemedText
-                      type="subtitle"
-                      style={{
-                        fontSize: 15,
-                        color: colors.white,
-                      }}>
-                      {item.ammount}
-                    </ThemedText>
-                  </View>
-
-                  <Icon
-                    color={colors.white}
-                    source={require('../../../assets/images/arrow-f.png')}
-                    size={14}
-                  />
-                </View>
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
+          <PlanItem item={item} onPress={() => {
+            navigation.navigate(mainRouts.selectBank);
+          }} />
         )}
       />
     </View>
