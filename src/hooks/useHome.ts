@@ -8,8 +8,10 @@ export function useHome() {
     const { plans } = usePlan()
 
     const balance = () => {
-        return formatNumber(0)
-    }
+        // Calculate the total balance from plans
+        const totalBalance = plans?.reduce((acc, plan) => acc + (plan.balance || 0), 0) || 0;
+        return formatNumber(totalBalance);
+    };
 
     const gain = () => {
         return formatNumber(0)
