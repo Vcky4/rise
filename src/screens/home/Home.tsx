@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,9 @@ import Icon from '../../component/Icon';
 import LinearGradient from 'react-native-linear-gradient';
 import mainRouts from '../../navigation/routs/mainRouts';
 import PlanItem from './PlanItem';
+import getGreeting from '../../utils/getGreeting';
+import { useHome } from '../../hooks/useHome';
+
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
@@ -43,6 +46,7 @@ const data = [
 
 const Home: React.FC<IProps> = ({ navigation }) => {
   const [isVisible, setisVible] = React.useState(false);
+  const { user, balance, gain } = useHome()
   return (
     <View style={styles.container}>
       <Image
@@ -55,18 +59,14 @@ const Home: React.FC<IProps> = ({ navigation }) => {
           style={{
             color: colors.text,
             fontSize: 17,
-            fontFamily: 'DMSans-Regular',
           }}>
-          {' '}
-          Good morning ☀{'\n'}
+          {getGreeting()}{'\n'}
           <ThemedText
             style={{
               color: colors.text,
               fontSize: 20,
-              fontFamily: 'DMSans-semiBold',
             }}>
-            {' '}
-            Deborah
+            {user?.first_name}
           </ThemedText>
         </ThemedText>
 
@@ -150,14 +150,16 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                     fontFamily: 'DMSans-regular',
                     paddingEnd: 10,
                   }}>
-                  {' '}
                   Total Balance
                 </ThemedText>
                 <TouchableOpacity onPress={() => {
                   setisVible(!isVisible)
                 }}>
 
-                  <Icon source={isVisible ? require('../../../assets/images/eye.png') : require('../../../assets/images/eye_opened.png')} />
+                  <Icon source={
+                    isVisible ? require('../../../assets/images/eye.png')
+                      : require('../../../assets/images/eye_opened.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <ThemedText
@@ -168,7 +170,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                   fontFamily: 'DMSans-regular',
                   marginTop: 12,
                 }}>
-                {!isVisible ? ' $0.00' : "*******"}
+                {!isVisible ? `$${balance()}` : "*******"}
 
               </ThemedText>
 
@@ -207,7 +209,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                     fontSize: 15,
                     fontFamily: 'DMSans-regular',
                   }}>
-                  0.00%
+                  {gain()}%
                 </ThemedText>
 
                 <Icon
