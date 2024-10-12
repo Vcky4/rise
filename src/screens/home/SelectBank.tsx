@@ -1,32 +1,21 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
-  BackHandler,
-  Image,
-  ScrollView,
   FlatList,
-  ImageBackground,
 } from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from '../../component/Icon';
 import colors from '../../../assets/colors/colors';
-import {ThemedText} from '../../component/ThemedText';
-import Button from '../../component/Button';
-import InputField from '../../component/InputField';
-import DatePicker from 'react-native-date-picker';
-import {createEntityAdapter} from '@reduxjs/toolkit';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { ThemedText } from '../../component/ThemedText';
+import mainRouts from '../../navigation/routs/mainRouts';
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const SelectBank: React.FC<IProps> = ({navigation}) => {
-  const [step, setStep] = React.useState(0);
-  const bottomRef = useRef();
+const SelectBank: React.FC<IProps> = ({ navigation }) => {
 
   const data = [
     {
@@ -82,10 +71,23 @@ const SelectBank: React.FC<IProps> = ({navigation}) => {
 
       <FlatList
         data={data}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => {}}
-            style={{flexDirection: 'row', alignItems: 'center',justifyContent:'space-between',width:'100%',paddingVertical:15,borderBottomWidth:1,borderBottomColor:colors.borderCOlor}}>
+            onPress={() => {
+              navigation.replace(mainRouts.success, {
+                title: 'Plan funded',
+                desc: 'Your plan has been successfully funded',
+            });
+             }}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              paddingVertical: 15,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.borderCOlor
+            }}>
             <View>
               <ThemedText
                 type="subtitle"
@@ -93,15 +95,15 @@ const SelectBank: React.FC<IProps> = ({navigation}) => {
                   fontSize: 15,
                   // fontFamily:'DMSans-Bold'
                 }}>
-                0123456789 • 
+                0123456789 •
                 <ThemedText
-                type="subtitle"
-                style={{
-                  fontSize: 15,
-                  // fontFamily:'DMSans-Bold'
-                  color:colors.textGray
-                }}>  GTBank PLC
-              </ThemedText>
+                  type="subtitle"
+                  style={{
+                    fontSize: 15,
+                    // fontFamily:'DMSans-Bold'
+                    color: colors.textGray
+                  }}>  GTBank PLC
+                </ThemedText>
               </ThemedText>
 
               <ThemedText
@@ -109,16 +111,16 @@ const SelectBank: React.FC<IProps> = ({navigation}) => {
                 style={{
                   fontSize: 15,
                   // fontFamily:'DMSans-Bold'
-                  color:colors.black
+                  color: colors.black
                 }}>Bosun Olanrewaju
               </ThemedText>
-              
+
             </View>
 
             <Icon
-            source={require('../../../assets/images/more.png')}
-            size={14}
-          />
+              source={require('../../../assets/images/more.png')}
+              size={14}
+            />
           </TouchableOpacity>
         )}
       />

@@ -1,49 +1,47 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
-  BackHandler,
-  Image,
-  ScrollView,
   FlatList,
   ImageBackground,
+  Dimensions
 } from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from '../../component/Icon';
 import colors from '../../../assets/colors/colors';
-import {ThemedText} from '../../component/ThemedText';
-import Button from '../../component/Button';
-import InputField from '../../component/InputField';
-import DatePicker from 'react-native-date-picker';
-import {createEntityAdapter} from '@reduxjs/toolkit';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { ThemedText } from '../../component/ThemedText';
 import mainRouts from '../../navigation/routs/mainRouts';
+
+
+
+
+const { width } = Dimensions.get('window');
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const ChoosePlan: React.FC<IProps> = ({navigation}) => {
-  const [step, setStep] = React.useState(0);
-  const bottomRef = useRef();
+const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
 
   const data = [
     {
       icon: require('../../../assets/images/plancard1.png'),
-      title: ' Plan a wedding',
+      title: 'Plan a wedding',
       ammount: '$1,983.09',
+      bg: '#ADA3F2'
     },
     {
       icon: require('../../../assets/images/plancard2.png'),
       title: 'Start a Business',
       ammount: '$1,983.09',
+      bg: '#ADA3F2'
     },
     {
       icon: require('../../../assets/images/plancard3.png'),
-      title: ' Build Wealth',
+      title: 'Build Wealth',
       ammount: '$1,983.09',
+      bg: '#ADA3F2'
     },
   ];
   return (
@@ -100,21 +98,25 @@ const ChoosePlan: React.FC<IProps> = ({navigation}) => {
       <FlatList
         data={data}
         numColumns={2}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(mainRouts.selectBank);
             }}
-            style={{width: '50%'}}>
+            style={{ width: '50%' }}>
             <ImageBackground
               style={{
-                // position: 'absolute',
                 width: '100%',
-                height: 270,
+                height: width * 0.6,
                 borderRadius: 15,
               }}
               source={item.icon}>
-              <View style={{height: '80%', justifyContent: 'flex-end'}}>
+              <View style={{
+                height: '100%',
+                justifyContent: 'flex-end',
+                paddingHorizontal: '10%',
+                paddingBottom: '19%',
+              }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -126,9 +128,7 @@ const ChoosePlan: React.FC<IProps> = ({navigation}) => {
                       type="subtitle"
                       style={{
                         fontSize: 15,
-                        textAlign: 'start',
                         color: colors.white,
-                        // fontFamily:'DMSans-Bold'
                       }}>
                       {item.title}
                     </ThemedText>
@@ -137,9 +137,7 @@ const ChoosePlan: React.FC<IProps> = ({navigation}) => {
                       type="subtitle"
                       style={{
                         fontSize: 15,
-                        textAlign: 'start',
                         color: colors.white,
-                        // fontFamily:'DMSans-Bold'
                       }}>
                       {item.ammount}
                     </ThemedText>

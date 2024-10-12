@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Platform, TouchableOpacity, ScrollView, } from "react-native";
+import { View, StyleSheet, Image, Platform, TouchableOpacity, ScrollView, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import colors from "../../../assets/colors/colors";
 import Icon from "../../component/Icon";

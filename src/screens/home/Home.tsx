@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -12,7 +11,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import colors from '../../../assets/colors/colors';
 import { ThemedText } from '../../component/ThemedText';
 import Icon from '../../component/Icon';
-import Button from '../../component/Button';
 import LinearGradient from 'react-native-linear-gradient';
 import mainRouts from '../../navigation/routs/mainRouts';
 

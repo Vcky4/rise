@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, BackHandler, Image, Dimensions, ScrollView } from "react-native";
+import { View, StyleSheet, TouchableOpacity, BackHandler, Image, ScrollView } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Icon from "../../component/Icon";
 import colors from "../../../assets/colors/colors";
@@ -10,7 +10,6 @@ import DatePicker from "react-native-date-picker";
 import { LineChart } from "react-native-gifted-charts";
 import mainRouts from "../../navigation/routs/mainRouts";
 
-const { width } = Dimensions.get('window');
 
 interface IProps {
     navigation: NativeStackNavigationProp<any>;
