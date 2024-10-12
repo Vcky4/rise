@@ -10,13 +10,17 @@ import Icon from '../../component/Icon';
 import colors from '../../../assets/colors/colors';
 import { ThemedText } from '../../component/ThemedText';
 import mainRouts from '../../navigation/routs/mainRouts';
+import { RouteProp } from '@react-navigation/native';
+import { usePlan } from '../../hooks/usePlan';
 
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
+  route: RouteProp<any, any>;
 }
 
-const SelectBank: React.FC<IProps> = ({ navigation }) => {
-
+const SelectBank: React.FC<IProps> = ({ navigation, route }) => {
+  const { fundPlan } = usePlan()
+  const props = route.params
   const data = [
     {
       AccountNumber: '0123456789  •  ',
@@ -74,11 +78,12 @@ const SelectBank: React.FC<IProps> = ({ navigation }) => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
+              fundPlan(props?.id)
               navigation.replace(mainRouts.success, {
                 title: 'Plan funded',
                 desc: 'Your plan has been successfully funded',
-            });
-             }}
+              });
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',

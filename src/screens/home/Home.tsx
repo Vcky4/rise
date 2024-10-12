@@ -291,6 +291,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               gap: 10,
               marginTop: 10
             }}
+            keyExtractor={(item)=> item.toString()}
             renderItem={({ item }) => (
               typeof item === 'string'
                 ?
@@ -323,7 +324,9 @@ const Home: React.FC<IProps> = ({ navigation }) => {
                   </ThemedText>
                 </TouchableOpacity>
                 : <PlanItem item={item} width={170} height={243} onPress={() => {
-                  navigation.navigate(mainRouts.planDetails);
+                  navigation.navigate(mainRouts.planDetails, {
+                    id:item.id
+                  });
                 }} />
             )}
           />

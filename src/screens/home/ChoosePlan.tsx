@@ -25,9 +25,8 @@ interface IProps {
 }
 
 const ChoosePlan: React.FC<IProps> = ({ navigation }) => {
-  const {plans} = usePlan()
+  const { plans, fundPlan } = usePlan()
 
-console.log(plans)
   return (
     <View style={styles.container}>
       <View
@@ -80,21 +79,23 @@ console.log(plans)
       </ThemedText>
 
       <FlatList
-      style={{
-        width: '100%'
-      }}
-      contentContainerStyle={{
-        gap:10,
-      }}
-      columnWrapperStyle={{
-        justifyContent: 'space-between', 
-        gap: 10,
-      }}
+        style={{
+          width: '100%'
+        }}
+        contentContainerStyle={{
+          gap: 10,
+        }}
+        columnWrapperStyle={{
+          justifyContent: 'space-between',
+          gap: 10,
+        }}
         data={plans}
         numColumns={2}
         renderItem={({ item }) => (
           <PlanItem item={item} onPress={() => {
-            navigation.navigate(mainRouts.selectBank);
+            navigation.navigate(mainRouts.selectBank, {
+              id: item.id
+            });
           }} />
         )}
       />

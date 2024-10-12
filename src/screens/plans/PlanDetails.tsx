@@ -241,7 +241,9 @@ const PlansDetails: React.FC<IProps> = ({ navigation }) => {
 
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate(mainRouts.selectBank)
+                            navigation.navigate(mainRouts.selectBank,{
+                                id: ''
+                            })
                         }}
                         style={{
                             flexDirection: 'row',
