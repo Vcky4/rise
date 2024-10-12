@@ -15,16 +15,16 @@ const colors = {
   lightBg2: 'rgba(37, 211, 102, 0.7)',
   halfWhite: 'rgba(255, 255, 255, 0.85)',
   inactiveBt: '#D7D7D7',
-  inactive:'rgba(113, 135, 156, 0.1)',
-  inactiveTab: '#DEDEDE',
+  inactive: 'rgba(113, 135, 156, 0.1)',
+  inactiveTab: 'rgba(0, 0, 0, 0.4)',
   textHash: '#455154',
   border: '#F8F8F9',
   borderInactive: '#E1E8ED',
   warning: '#FFD9E9',
-  red:'#EB5757',
-  borderCOlor:'rgba(113, 135, 156, 0.1)',
-  green:'rgba(39, 191, 65, 1)',
-  lightGray:'#94A1AD'
+  red: '#EB5757',
+  borderCOlor: 'rgba(113, 135, 156, 0.1)',
+  green: 'rgba(39, 191, 65, 1)',
+  lightGray: '#94A1AD'
 };
 
 export default colors;

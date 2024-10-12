@@ -8,9 +8,9 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import colors from '../../../assets/colors/colors';
-import {ThemedText} from '../../component/ThemedText';
+import { ThemedText } from '../../component/ThemedText';
 import Icon from '../../component/Icon';
 import Button from '../../component/Button';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,7 +20,7 @@ interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
 
-const Home: React.FC<IProps> = ({navigation}) => {
+const Home: React.FC<IProps> = ({ navigation }) => {
   const [isVisible, setisVible] = React.useState(false);
   return (
     <View style={styles.container}>
@@ -29,7 +29,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
         source={require('../../../assets/images/overlay.png')}
       />
 
-      <View style={[styles.header,{ paddingTop: Platform.OS === 'ios' ? 60 : 10}]}>
+      <View style={[styles.header, { paddingTop: Platform.OS === 'ios' ? 60 : 10 }]}>
         <ThemedText
           style={{
             color: colors.text,
@@ -49,7 +49,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
           </ThemedText>
         </ThemedText>
 
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             style={{
               backgroundColor: colors.primary,
@@ -94,9 +94,9 @@ const Home: React.FC<IProps> = ({navigation}) => {
         </View>
       </View>
       <ScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{paddingBottom: 100}}>
-        <View style={{paddingHorizontal: 20, height: '100%'}}>
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 100 }}>
+        <View style={{ paddingHorizontal: 20, height: '100%' }}>
           <View
             style={{
               width: '100%',
@@ -108,8 +108,8 @@ const Home: React.FC<IProps> = ({navigation}) => {
               marginTop: 10,
             }}>
             <LinearGradient
-              start={{x: 0.1, y: 0.5}}
-              end={{x: 0.5, y: 0.4}}
+              start={{ x: 0.1, y: 0.5 }}
+              end={{ x: 0.5, y: 0.4 }}
               colors={['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0)']}
               style={{
                 width: '100%',
@@ -117,8 +117,10 @@ const Home: React.FC<IProps> = ({navigation}) => {
                 paddingHorizontal: 10,
                 paddingVertical: 15,
                 alignItems: 'center',
+                borderRadius: 10,
+                margin:0.2
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <ThemedText
                   style={{
                     color: colors.textGray,
@@ -130,11 +132,11 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   {' '}
                   Total Balance
                 </ThemedText>
-                <TouchableOpacity onPress={()=>{
+                <TouchableOpacity onPress={() => {
                   setisVible(!isVisible)
                 }}>
 
-                <Icon source={ isVisible ?require('../../../assets/images/eye.png'):require('../../../assets/images/eye_opened.png')} />
+                  <Icon source={isVisible ? require('../../../assets/images/eye.png') : require('../../../assets/images/eye_opened.png')} />
                 </TouchableOpacity>
               </View>
               <ThemedText
@@ -145,8 +147,8 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   fontFamily: 'DMSans-regular',
                   marginTop: 12,
                 }}>
-                  {!isVisible?' $0.00':"*******"}
-               
+                {!isVisible ? ' $0.00' : "*******"}
+
               </ThemedText>
 
               <View
@@ -174,7 +176,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   Total Gains
                 </ThemedText>
                 <Icon
-                  style={{height: 10, width: 10, paddingHorizontal: 10}}
+                  style={{ height: 10, width: 10, paddingHorizontal: 10 }}
                   source={require('../../../assets/images/trend.png')}
                 />
                 <ThemedText
@@ -188,7 +190,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
                 </ThemedText>
 
                 <Icon
-                  style={{height: 10, width: 10, paddingHorizontal: 15}}
+                  style={{ height: 10, width: 10, paddingHorizontal: 15 }}
                   source={require('../../../assets/images/more.png')}
                 />
               </View>
@@ -212,7 +214,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
               borderColor: colors.borderCOlor,
             }}>
             <Icon
-              style={{height: 21, width: 21}}
+              style={{ height: 21, width: 21 }}
               source={require('../../../assets/images/add.png')}
             />
 
@@ -242,12 +244,11 @@ const Home: React.FC<IProps> = ({navigation}) => {
                 fontSize: 18,
                 fontFamily: 'DMSans-Regular',
               }}>
-              {' '}
               Create a plan
             </ThemedText>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', alignItems: 'center'}}>
+              style={{ flexDirection: 'row', alignItems: 'center' }}>
               <ThemedText
                 style={{
                   color: colors.lightGray,
@@ -256,12 +257,11 @@ const Home: React.FC<IProps> = ({navigation}) => {
                   fontFamily: 'DMSans-Bold',
                   paddingEnd: 10,
                 }}>
-                {' '}
                 View all plans
               </ThemedText>
               <Icon
                 color={colors.lightGray}
-                style={{height: 10, width: 10}}
+                style={{ height: 10, width: 10 }}
                 source={require('../../../assets/images/more.png')}
               />
             </TouchableOpacity>
@@ -274,12 +274,14 @@ const Home: React.FC<IProps> = ({navigation}) => {
               fontSize: 15,
               fontFamily: 'DMSans-Regular',
               marginTop: 12,
+              width: '85%',
             }}>
-            {' '}
             Start your investment journey by creating a plan
           </ThemedText>
 
-          <TouchableOpacity
+          <TouchableOpacity onPress={() => {
+            navigation.navigate(mainRouts.createPlan)
+          }}
             style={{
               height: 243,
               width: 170,
@@ -291,7 +293,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
               marginTop: 20,
             }}>
             <Icon
-              style={{height: 42, width: 42}}
+              style={{ height: 42, width: 42 }}
               source={require('../../../assets/images/addicon.png')}
             />
             <ThemedText
@@ -328,9 +330,9 @@ const Home: React.FC<IProps> = ({navigation}) => {
               borderRadius: 10,
               paddingHorizontal: 10,
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon
-                style={{height: 24, width: 24}}
+                style={{ height: 24, width: 24 }}
                 source={require('../../../assets/images/ask.png')}
               />
               <ThemedText
@@ -375,7 +377,7 @@ const Home: React.FC<IProps> = ({navigation}) => {
               height: 240,
               padding: 20,
               borderRadius: 15,
-                shadowColor: '#rgba(64, 187, 195, 0.15)',
+              shadowColor: '#rgba(64, 187, 195, 0.15)',
               shadowOffset: {
                 width: 0,
                 height: 5,
@@ -404,9 +406,9 @@ const Home: React.FC<IProps> = ({navigation}) => {
                 width: 56,
                 marginTop: 20,
               }}
-             />
+            />
 
-              <ThemedText
+            <ThemedText
               style={{
                 color: colors.white,
                 textAlign: 'left',
@@ -418,14 +420,14 @@ const Home: React.FC<IProps> = ({navigation}) => {
               We have no intention of rotating capital out of strong multi-year
               investments because they’ve recently done well or because ‘growth’
               has out performed ‘value’.
-              </ThemedText>
+            </ThemedText>
 
-               <View
+            <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 marginTop: 20,
-                justifyContent:'space-between'
+                justifyContent: 'space-between'
               }}>
               <ThemedText
                 style={{
@@ -439,13 +441,13 @@ const Home: React.FC<IProps> = ({navigation}) => {
               </ThemedText>
               <TouchableOpacity
                 style={{
-                 
+
                   height: 42,
                   width: 42,
                   borderRadius: 20,
                 }}>
                 <Icon
-                  style={{height: 42, width: 42}}
+                  style={{ height: 42, width: 42 }}
                   source={require('../../../assets/images/share.png')}
                 />
               </TouchableOpacity>
@@ -456,10 +458,10 @@ const Home: React.FC<IProps> = ({navigation}) => {
 
           </View>
 
-<View style={{alignItems:'center'}}>
+          <View style={{ alignItems: 'center' }}>
 
-          <Image style={{height:30,width:100,marginTop:32}} source={require('../../../assets/images/rise.png')}/>
-</View>
+            <Image style={{ height: 30, width: 100, marginTop: 32 }} source={require('../../../assets/images/rise.png')} />
+          </View>
         </View>
       </ScrollView>
     </View>
