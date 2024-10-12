@@ -48,7 +48,7 @@ const Success: React.FC<IProps> = ({ navigation, route }) => {
             <Button
                 enabled={true}
                 title={props?.buttonTitle || "Okay"}
-                onPress={() => navigation.navigate(
+                onPress={() => navigation.replace(
                     props?.buttonTitle ? props.to
                         : token
                             ? pin ? mainRouts.home : mainRouts.setPin

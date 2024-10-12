@@ -15,6 +15,7 @@ import Account from "../../screens/account/Account";
 import { ThemedText } from "../../component/ThemedText";
 import CreatePlans from "../../screens/plans/CreatePlan";
 import FundWallet from "../../screens/home/AddFund";
+import PlansDetails from "../../screens/plans/PlanDetails";
 import ChoosePlan from "../../screens/home/ChoosePlan";
 
 interface IProps {
@@ -49,7 +50,6 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
         <BtStack.Screen name={mainRouts.account} component={Account} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.createPlan} component={CreatePlans} options={{ headerShown: false }} />
         <BtStack.Screen name={mainRouts.fundWallet} component={FundWallet} options={{ headerShown: false }} />
-        <BtStack.Screen name={mainRouts.chooseplan} component={ChoosePlan} options={{ headerShown: false }} />
 
       </BtStack.Navigator>
 
@@ -67,7 +67,7 @@ const MainStack: React.FC<IProps> = ({ navigation, route }) => {
       }}>
         {[
           { name: mainRouts.home, icon: require('../../../assets/images/home.png') },
-          { name: mainRouts.createPlan, icon: require('../../../assets/images/plans.png') },
+          { name: mainRouts.plans, icon: require('../../../assets/images/plans.png') },
           { name: mainRouts.wallet, icon: require('../../../assets/images/wallet.png') },
           { name: mainRouts.feeds, icon: require('../../../assets/images/feeds.png') },
           { name: mainRouts.account, icon: require('../../../assets/images/account.png') },

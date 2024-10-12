@@ -459,7 +459,7 @@ const CreatePlans: React.FC<IProps> = ({ navigation }) => {
                             if (step <= 3) {
                                 setStep(step + 1)
                             } else {
-                                navigation.navigate(mainRouts.success, {
+                                navigation.replace(mainRouts.success, {
                                     title: 'You just created your plan.',
                                     desc: 'Well done, Deborah',
                                     buttonTitle: 'View Plan',
